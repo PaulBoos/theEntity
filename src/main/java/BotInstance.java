@@ -5,8 +5,9 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.requests.restaction.CommandUpdateAction;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.jetbrains.annotations.NotNull;
@@ -76,26 +77,27 @@ public class BotInstance {
 		System.out.println("Login Successful");
 		jda.awaitReady();
 		setPresence();
+		
 		jda.getGuildById(555819034877231115L).updateCommands().addCommands(
-				new CommandUpdateAction.CommandData("convert", "Convert Time into a usable Timestamp (currently at noon)")
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "day", "Put the day here damnit").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "month", "Put the month here damnit").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "year", "Put the year here damnit").setRequired(true)),
-				new CommandUpdateAction.CommandData("newturn", "Start a new turn at 12:00 GMT")
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "day", "Put the day here damnit").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "month", "Put the month here damnit").setRequired(true)),
-				new CommandUpdateAction.CommandData("timer", "Create a custom timer")
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "hour", "Put the hour here damnit").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "minute", "Put the minute here damnit").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "day", "Put the day here damnit").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "month", "Put the month here damnit").setRequired(true))
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "year", "Put the year here damnit").setRequired(true)),
-				new CommandUpdateAction.CommandData("now", "NEXT TURN RIGHT NOW!")
-						.addOption(new CommandUpdateAction.OptionData(Command.OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.").setRequired(true)),
-				new CommandUpdateAction.CommandData("howlong", "Tell me how long it takes until the next turn.")
+				new CommandData("convert", "Convert Time into a usable Timestamp (currently at noon)")
+						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.", true)
+						.addOption(OptionType.INTEGER, "day", "Put the day here damnit", true)
+						.addOption(OptionType.INTEGER, "month", "Put the month here damnit", true)
+						.addOption(OptionType.INTEGER, "year", "Put the year here damnit", true),
+				new CommandData("newturn", "Start a new turn at 12:00 GMT")
+						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.", true)
+						.addOption(OptionType.INTEGER, "day", "Put the day here damnit", true)
+						.addOption(OptionType.INTEGER, "month", "Put the month here damnit", true),
+				new CommandData("timer", "Create a custom timer")
+						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.", true)
+						.addOption(OptionType.INTEGER, "hour", "Put the hour here damnit", true)
+						.addOption(OptionType.INTEGER, "minute", "Put the minute here damnit", true)
+						.addOption(OptionType.INTEGER, "day", "Put the day here damnit", true)
+						.addOption(OptionType.INTEGER, "month", "Put the month here damnit", true)
+						.addOption(OptionType.INTEGER, "year", "Put the year here damnit", true),
+				new CommandData("now", "NEXT TURN RIGHT NOW!")
+						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.", true),
+				new CommandData("howlong", "Tell me how long it takes until the next turn.")
 		).queue();
 //		jda.getGuildById(826170347207655434L).updateCommands().addCommands(
 //				new CommandUpdateAction.CommandData("howlong", "Tell me how long it takes until the next turn.")
@@ -151,7 +153,7 @@ public class BotInstance {
 					break;
 				case "now":
 					announceNewTurn(Instant.now(), (int) event.getOption("turn").getAsLong());
-					event.acknowledge(false).queue();
+					event.deferReply(false).queue();
 					break;
 				case "howlong":
 					String message =
