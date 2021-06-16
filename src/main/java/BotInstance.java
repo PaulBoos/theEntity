@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -80,23 +82,23 @@ public class BotInstance {
 		
 		jda.getGuildById(555819034877231115L).updateCommands().addCommands(
 				new CommandData("convert", "Convert Time into a usable Timestamp (currently at noon)")
-						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.", true)
 						.addOption(OptionType.INTEGER, "day", "Put the day here damnit", true)
 						.addOption(OptionType.INTEGER, "month", "Put the month here damnit", true)
-						.addOption(OptionType.INTEGER, "year", "Put the year here damnit", true),
+						.addOption(OptionType.INTEGER, "year", "Put the year here damnit", true)
+						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("newturn", "Start a new turn at 12:00 GMT")
-						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.", true)
 						.addOption(OptionType.INTEGER, "day", "Put the day here damnit", true)
-						.addOption(OptionType.INTEGER, "month", "Put the month here damnit", true),
+						.addOption(OptionType.INTEGER, "month", "Put the month here damnit", true)
+						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("timer", "Create a custom timer")
-						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.", true)
 						.addOption(OptionType.INTEGER, "hour", "Put the hour here damnit", true)
 						.addOption(OptionType.INTEGER, "minute", "Put the minute here damnit", true)
 						.addOption(OptionType.INTEGER, "day", "Put the day here damnit", true)
 						.addOption(OptionType.INTEGER, "month", "Put the month here damnit", true)
-						.addOption(OptionType.INTEGER, "year", "Put the year here damnit", true),
+						.addOption(OptionType.INTEGER, "year", "Put the year here damnit", true)
+						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("now", "NEXT TURN RIGHT NOW!")
-						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently.", true),
+						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("howlong", "Tell me how long it takes until the next turn.")
 		).queue();
 //		jda.getGuildById(826170347207655434L).updateCommands().addCommands(
@@ -106,55 +108,73 @@ public class BotInstance {
 //				new CommandUpdateAction.CommandData("help!", "Bechotron Help Site"),
 //				new CommandUpdateAction.CommandData("about!", "Legal Stuff")
 //		).queue();
-		//jda.getTextChannelById(831871320521441360L).sendMessage("").queue();
-		//jda.getGuildById(826170347207655434L).getMemberById(764244062291099648L).modifyNickname("NOT The Almighty One").queue();
+//		jda.getTextChannelById(831871320521441360L).sendMessage("").queue();
+//		jda.getGuildById(826170347207655434L).getMemberById(764244062291099648L).modifyNickname("NOT The Almighty One").queue();
 		jda.addEventListener(new Handler());
-		//new TurnTimer(Instant.parse(""), instance -> instance.jda.getGuildById(0L).getTextChannelById(0L).sendMessage("TURN TIMER'S UP!"));
+//		new TurnTimer(Instant.parse(""), instance -> instance.jda.getGuildById(0L).getTextChannelById(0L).sendMessage("TURN TIMER'S UP!"));
 	}
 	
 	public void setPresence() {
-//		jda.getPresence().setPresence(OnlineStatus.ONLINE, Activity.of(Activity.ActivityType.LISTENING, "\"help!\" or \"about!\""));
-		jda.getPresence().setPresence(OnlineStatus.ONLINE, Activity.of(Activity.ActivityType.DEFAULT, "Meow."));
+		jda.getPresence().setPresence(OnlineStatus.ONLINE, Activity.of(Activity.ActivityType.LISTENING, "\"howlong\""));
+//		jda.getPresence().setPresence(OnlineStatus.ONLINE, Activity.of(Activity.ActivityType.DEFAULT, "\"howlong\" for Turn Time left!"));
 		System.out.println("Presence Set.");
 	}
 	
 	private class Handler extends ListenerAdapter {
 		@Override
 		public void onSlashCommand(@NotNull SlashCommandEvent event) {
+			OptionMapping s;
+			Instant i;
 			switch(event.getName()) {
 				case "newturn":
-					Instant newturnInstant = Instant.parse(
+					i = Instant.parse(
 							String.format(
 									"2021-%02d-%02dT12:00:00.00Z", event.getOption("month").getAsLong(), event.getOption("day").getAsLong()
 							)
 					);
-					event.reply("\nCreating Timer for " + newturnInstant.toString().replace("T"," @ ").replace("Z"," GMT")).complete();
-					announceNewTurn(newturnInstant, (int) event.getOption("turn").getAsLong());
+					event.reply("\nCreating Timer for " + i.toString().replace("T"," @ ").replace("Z"," GMT")).complete();
+					s = event.getOption("turn");
+					if(s == null)
+						announceNewTurn(i);
+					else
+						announceNewTurn(i, (int) event.getOption("turn").getAsLong());
 					break;
+					
 				case "timer":
-					Instant timerInstant = Instant.parse(
+					i = Instant.parse(
 							String.format(
 									"%04d-%02d-%02dT%02d:%02d:00.00Z", event.getOption("year").getAsLong(), event.getOption("month").getAsLong(), event.getOption("day").getAsLong(), event.getOption("hour").getAsLong(), event.getOption("minute").getAsLong()
 							)
 					);
-					event.reply("\nCreating Timer for " + timerInstant.toString().replace("T"," @ ").replace("Z"," GMT")).complete();
-					announceNewTurn(timerInstant, (int) event.getOption("turn").getAsLong());
+					event.reply("\nCreating Timer for " + i.toString().replace("T"," @ ").replace("Z"," GMT")).complete();
+					s = event.getOption("turn");
+					if(s == null)
+						announceNewTurn(i);
+					else
+						announceNewTurn(i, (int) event.getOption("turn").getAsLong());
 					break;
+					
 				case "convert":
-					Instant convertInstant = Instant.parse(
+					i = Instant.parse(
 							String.format(
 									"%04d-%02d-%02dT12:00:00.00Z", event.getOption("year").getAsLong(), event.getOption("month").getAsLong(), event.getOption("day").getAsLong()
 							)
 					);
 					event.reply(
-							"Epoch seconds: " + convertInstant.getEpochSecond()
-							+ "\nTimestamp: " + convertInstant.toString().replace("T"," @ ").replace("Z","")
+							"Epoch seconds: " + i.getEpochSecond()
+							+ "\nTimestamp: " + i.toString().replace("T"," @ ").replace("Z","")
 					).complete();
 					break;
+					
 				case "now":
-					announceNewTurn(Instant.now(), (int) event.getOption("turn").getAsLong());
+					s = event.getOption("turn");
+					if(s == null)
+						announceNewTurn(Instant.now());
+					else
+						announceNewTurn(Instant.now(), (int) event.getOption("turn").getAsLong());
 					event.deferReply(false).queue();
 					break;
+					
 				case "howlong":
 					String message =
 							Duration.between(
@@ -167,6 +187,7 @@ public class BotInstance {
 					message += " minutes.";
 					event.reply("Next turn in: " + message).queue();
 					break;
+					
 				default:
 					event.reply("I currently have no idea how to react to this.").queue();
 			}
@@ -174,7 +195,7 @@ public class BotInstance {
 		
 		public void announceNewTurn(Instant instant, int turn) {
 			tt = new TurnTimer(instant, instance -> {
-				instance.jda.getTextChannelById(555819034877231117L).sendMessage(jda.getGuildById(555819034877231115L).getRoleById(555830704773136385L).getAsMention()).embed(
+				instance.jda.getTextChannelById(826170348756140125L).sendMessage(jda.getGuildById(826170347207655434L).getRoleById(845263298446491690L).getAsMention()).embed(
 						new EmbedBuilder()
 								.setTitle("A New Turn Has Begun.")
 								.setDescription("With this message, a new turn has begun.")
@@ -182,6 +203,19 @@ public class BotInstance {
 								.setImage("https://cdn.discordapp.com/attachments/555819034877231117/847202452608647228/logo.png")
 								.build()).queue();
 				for(Tribe t: Tribe.newTurnSubs) t.announceNewTurn(instance.jda, turn);
+			});
+		}
+		
+		public void announceNewTurn(Instant instant) {
+			tt = new TurnTimer(instant, instance -> {
+				instance.jda.getTextChannelById(826170348756140125L).sendMessage(jda.getGuildById(826170347207655434L).getRoleById(845263298446491690L).getAsMention()).embed(
+						new EmbedBuilder()
+								.setTitle("A New Turn Has Begun.")
+								.setDescription("With this message, a new turn has begun.")
+								.setColor(Color.GREEN)
+								.setImage("https://cdn.discordapp.com/attachments/555819034877231117/847202452608647228/logo.png")
+								.build()).queue();
+				for(Tribe t: Tribe.newTurnSubs) t.announceNewTurn(instance.jda);
 			});
 		}
 		
@@ -255,7 +289,7 @@ public class BotInstance {
 					event.getChannel().sendMessage(results).queue();
 				}
 			} catch(Exception e) {
-				e.printStackTrace();
+				if(!e.getMessage().equals("Not important")) e.printStackTrace();
 			}
 		}
 		
@@ -298,6 +332,18 @@ public class BotInstance {
 						e.printStackTrace();
 						break;
 				}
+			}
+			if(event.getMessage().getContentRaw().equals("howlong")) {
+				String message =
+						Duration.between(
+								Instant.now(),
+								Instant.ofEpochSecond(tt.getExecutionTime()))
+								.toString();
+				message = message.split("M")[0]
+						.replace("PT","")
+						.replace("H"," hours, ");
+				message += " minutes.";
+				event.getChannel().sendMessage("Next turn in: " + message).queue();
 			}
 		}
 	}

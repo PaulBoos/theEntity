@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>dev.boos</groupId>
     <artifactId>theEntity</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -47,11 +47,11 @@
             <artifactId>lavaplayer</artifactId>
             <version>LATEST</version>
         </dependency>-->
-        <!--<dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.5</version>
-        </dependency>-->
+            <version>LATEST</version>
+        </dependency>
         <dependency>
             <groupId>org.brunocvcunha.jiphy</groupId>
             <artifactId>jiphy</artifactId>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.github.DV8FromTheWorld</groupId>
             <artifactId>JDA</artifactId>
-            <version>feature~slash-commands-SNAPSHOT</version>
+            <version>LATEST</version>
             <exclusions>
                 <exclusion>
                     <groupId>club.minnced</groupId>

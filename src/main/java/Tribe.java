@@ -31,4 +31,12 @@ public enum Tribe {
 		}
 	}
 	
+	void announceNewTurn(JDA jda) {
+		try {
+			jda.getTextChannelById(actionChannel).sendMessage("```A new turn begins.```").queue();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
