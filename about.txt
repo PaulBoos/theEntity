@@ -1,0 +1,4 @@
+Made in Java with the awesome JDA by Austin Keener
+        *https://github.com/DV8FromTheWorld/JDA*
+Using the Lavaplayer by Sedmelluq.
+        *https://github.com/sedmelluq/lavaplayer*
