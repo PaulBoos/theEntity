@@ -109,9 +109,9 @@ public class BotInstance {
 						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("howlong", "Tell me how long it takes until the next turn.")
 		).queue();
-//		jda.getGuildById(826170347207655434L).updateCommands().addCommands(
-//				new CommandUpdateAction.CommandData("howlong", "Tell me how long it takes until the next turn.")
-//		).queue();
+		jda.getGuildById(826170347207655434L).updateCommands().addCommands(
+				new CommandData("howlong", "Tell me how long it takes until the next turn.")
+		).queue();
 //		jda.updateCommands().addCommands(
 //				new CommandData("help", "Bechotron Help Site"),
 //				new CommandData("about", "Legal Stuff")
@@ -124,7 +124,7 @@ public class BotInstance {
 	}
 	
 	public void setPresence() {
-		jda.getPresence().setPresence(OnlineStatus.ONLINE, Activity.of(Activity.ActivityType.LISTENING, "\"howlong\""));
+		jda.getPresence().setPresence(OnlineStatus.ONLINE, Activity.of(Activity.ActivityType.LISTENING, "\\howlong"));
 //		jda.getPresence().setPresence(OnlineStatus.ONLINE, Activity.of(Activity.ActivityType.DEFAULT, "\"howlong\" for Turn Time left!"));
 		System.out.println("Presence Set.");
 	}
@@ -193,16 +193,20 @@ public class BotInstance {
 					event.deferReply(false).queue();
 				}
 				case "howlong" -> {
-					String message =
-							Duration.between(
-									Instant.now(),
-									Instant.ofEpochSecond(tt.getExecutionTime()))
-									.toString();
-					message = message.split("M")[0]
-							.replace("PT", "")
-							.replace("H", " hours, ");
-					message += " minutes.";
-					event.reply("Next turn in: " + message).queue();
+					try {
+						String message =
+								Duration.between(
+										Instant.now(),
+										Instant.ofEpochSecond(tt.getExecutionTime()))
+										.toString();
+						message = message.split("M")[0]
+								.replace("PT","")
+								.replace("H"," hours, ");
+						message += " minutes.";
+						event.reply("Next turn in: " + message).queue();
+					} catch(NullPointerException e) {
+						event.reply("Currently no turn is in queue.").queue();
+					}
 				}
 				case "help", "about" -> event.reply("Very... empty here.").queue();
 				default -> event.reply("I currently have no idea how to react to this.").queue();
