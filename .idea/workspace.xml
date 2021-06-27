@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="Removed Token from Tracking" />
-    <list id="60c1460e-760e-4b95-a61f-46fafe724986" name="+ Text-Command &quot;howlong&quot;" comment="Cherrypicked" />
-    <list id="1ca1fb17-921b-4332-af9a-9c20de29238b" name="Revert: " comment="Revert:" />
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="Clearing up BotInstance&#10;adding workspace data recommended to be shared">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,7 +56,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Bechotron" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -74,7 +74,20 @@
       <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.BotInstance (1)">
+    <configuration name="BotInstance (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="core.BotInstance" />
+      <module name="theEntity" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BotInstance" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="BotInstance" />
       <module name="theEntity" />
@@ -97,6 +110,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.BotInstance (1)" />
         <item itemvalue="Application.BotInstance" />
       </list>
     </recent_temporary>
@@ -105,7 +119,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="" />
-      <changelist id="1ca1fb17-921b-4332-af9a-9c20de29238b" name="Revert: " comment="" />
+      <changelist id="" name="Revert: " comment="" />
       <created>1624613386432</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -113,7 +127,7 @@
       <workItem from="1624796778394" duration="231000" />
       <workItem from="1624797022621" duration="64000" />
       <workItem from="1624797098171" duration="355000" />
-      <workItem from="1624800888368" duration="3797000" />
+      <workItem from="1624800888368" duration="4518000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -157,7 +171,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624810715213</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Clearing up BotInstance&#10;adding workspace data recommended to be shared">
+      <created>1624811589982</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1624811589982</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +204,7 @@
     <MESSAGE value="Cherrypicked&#10;removed Token from Tracking" />
     <MESSAGE value="Removed Token from Tracking" />
     <MESSAGE value="Cherrypicked" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cherrypicked" />
+    <MESSAGE value="Clearing up BotInstance&#10;adding workspace data recommended to be shared" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clearing up BotInstance&#10;adding workspace data recommended to be shared" />
   </component>
 </project>
