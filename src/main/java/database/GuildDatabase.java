@@ -5,8 +5,8 @@ import java.sql.*;
 @SuppressWarnings("JpaQueryApiInspection")
 public class GuildDatabase extends Accessor {
 	
-	protected GuildDatabase(String path) {
-		super(path);
+	protected GuildDatabase(long guildID) {
+		super("data/guilds/" + guildID + ".db");
 	}
 	
 	public synchronized long getMember(long user) throws SQLException {
