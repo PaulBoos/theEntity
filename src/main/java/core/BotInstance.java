@@ -1,7 +1,10 @@
 package core;
 
-import net.dv8tion.jda.api.*;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -22,7 +25,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,28 +38,26 @@ public class BotInstance {
 	
 	public static void main(String[] args) throws IOException, UnsupportedFlavorException {
 		if(Facts.readTokenFile()) {
-			Thread t = new Thread(() -> {
+			new Thread(() -> {
 				try {
 					new BotInstance(Facts.firstLine);
 				} catch(Exception e) {
 					System.out.println("\nvvv LOGIN FAILED vvv");
 					e.printStackTrace();
 				}
-			});
-			t.start();
+			}).start();
 		} else {
 			if(Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor).toString().contains(Integer.toString(0x0a))) {
-				System.out.println("LOGIN FAILED - CLIPBOARD TOKEN INVALID");
+				System.out.println("LOGIN FAILED - CLIPBOARD TOKEN INVALID - CONTAINS LINE BREAK CHARACTER");
 			}
-			Thread t = new Thread(() -> {
+			new Thread(() -> {
 				try {
 					new BotInstance(Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor).toString());
 				} catch(Exception e) {
 					System.out.println("\nvvv LOGIN FAILED vvv");
 					e.printStackTrace();
 				}
-			});
-			t.start();
+			}).start();
 		}
 	}
 	
@@ -85,7 +86,7 @@ public class BotInstance {
 		setPresence();
 		
 		jda.getGuildById(555819034877231115L).updateCommands().addCommands(
-				new CommandData("convert", "Convert Time into a usable Timestamp (currently at noon)")
+				new CommandData("convert", "Convert Time into a usable Timestamp")
 						.addOption(OptionType.INTEGER, "day", "Put the day here damnit")
 						.addOption(OptionType.INTEGER, "month", "Put the month here damnit")
 						.addOption(OptionType.INTEGER, "year", "Put the year here damnit")
@@ -94,7 +95,7 @@ public class BotInstance {
 						.addOption(OptionType.INTEGER, "second", "Put the second here damnit"),
 				new CommandData("newturn", "Start a new turn at 12:00 GMT")
 						.addOption(OptionType.INTEGER, "day", "Put the day here damnit", true)
-						.addOption(OptionType.INTEGER, "month", "Put the month here damnit", true)
+						.addOption(OptionType.INTEGER, "month", "Put the month here damnit")
 						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("timer", "Create a custom timer")
 						.addOption(OptionType.INTEGER, "hour", "Put the hour here damnit", true)
@@ -130,30 +131,40 @@ public class BotInstance {
 	private class Handler extends ListenerAdapter {
 		@Override
 		public void onSlashCommand(@NotNull SlashCommandEvent event) {
-			OptionMapping s;
-			Instant i;
 			switch(event.getName()) {
 				case "newturn" -> {
-					i = Instant.parse(
+					int day = (int) event.getOption("day").getAsLong();
+					int month = (int) (
+							event.getOption("month") != null ?
+									event.getOption("month").getAsLong() :
+									day >= LocalDate.now().getDayOfMonth()?
+											LocalDate.now().getMonthValue():
+											LocalDate.now().getMonthValue()+1
+					);
+					int year =
+							month >= LocalDate.now().getMonthValue() ?
+									LocalDate.now().getYear():
+									LocalDate.now().getYear()+1;
+					Instant i = Instant.parse(
 							String.format(
-									"2021-%02d-%02dT12:00:00.00Z", event.getOption("month").getAsLong(), event.getOption("day").getAsLong()
+									"20%02d-%02d-%02dT12:00:00.00Z", year, month, day
 							)
 					);
-					event.reply("\nCreating core.Timer for " + i.toString().replace("T", " @ ").replace("Z", " GMT")).complete();
-					s = event.getOption("turn");
+					event.reply("\nCreating timer for " + i.toString().replace("T", " @ ").replace("Z", " GMT")).complete();
+					OptionMapping s = event.getOption("turn");
 					if(s == null)
 						announceNewTurn(i);
 					else
 						announceNewTurn(i, (int) event.getOption("turn").getAsLong());
 				}
 				case "timer" -> {
-					i = Instant.parse(
+					Instant i = Instant.parse(
 							String.format(
 									"%04d-%02d-%02dT%02d:%02d:00.00Z", event.getOption("year").getAsLong(), event.getOption("month").getAsLong(), event.getOption("day").getAsLong(), event.getOption("hour").getAsLong(), event.getOption("minute").getAsLong()
 							)
 					);
-					event.reply("\nCreating core.Timer for " + i.toString().replace("T", " @ ").replace("Z", " GMT")).complete();
-					s = event.getOption("turn");
+					event.reply("\nCreating timer for " + i.toString().replace("T", " @ ").replace("Z", " GMT")).complete();
+					OptionMapping s = event.getOption("turn");
 					if(s == null)
 						announceNewTurn(i);
 					else
@@ -161,13 +172,13 @@ public class BotInstance {
 				}
 				case "convert" -> {
 					try {
-						long  year   = event.getOption("year")   != null ? event.getOption("year")  .getAsLong() : Instant.now().atOffset(ZoneOffset.UTC).getYear();
-						long  month  = event.getOption("month")  != null ? event.getOption("month") .getAsLong() : Instant.now().atOffset(ZoneOffset.UTC).getMonthValue();
-						long  day    = event.getOption("day")    != null ? event.getOption("day")   .getAsLong() : Instant.now().atOffset(ZoneOffset.UTC).getDayOfMonth();
-						long  hour   = event.getOption("hour")   != null ? event.getOption("hour")  .getAsLong() : 12;
-						long  minute = event.getOption("minute") != null ? event.getOption("minute").getAsLong() : 0;
-						long  second = event.getOption("second") != null ? event.getOption("second").getAsLong() : 0;
-						i = Instant.parse(
+						int  year   = event.getOption("year")   != null ? (int) event.getOption("year")  .getAsLong() : LocalDate.now().getYear();
+						int  month  = event.getOption("month")  != null ? (int) event.getOption("month") .getAsLong() : LocalDate.now().getMonthValue();
+						int  day    = event.getOption("day")    != null ? (int) event.getOption("day")   .getAsLong() : LocalDate.now().getDayOfMonth();
+						int  hour   = event.getOption("hour")   != null ? (int) event.getOption("hour")  .getAsLong() : 12;
+						int  minute = event.getOption("minute") != null ? (int) event.getOption("minute").getAsLong() : 0;
+						int  second = event.getOption("second") != null ? (int) event.getOption("second").getAsLong() : 0;
+						Instant i = Instant.parse(
 								String.format(
 										"%04d-%02d-%02dT%02d:%02d:%02d.00Z", year, month, day, hour, minute, second
 								)
@@ -183,7 +194,7 @@ public class BotInstance {
 					}
 				}
 				case "now" -> {
-					s = event.getOption("turn");
+					OptionMapping s = event.getOption("turn");
 					if(s == null)
 						announceNewTurn(Instant.now());
 					else
@@ -241,7 +252,7 @@ public class BotInstance {
 		
 		@Override
 		public void onGuildMemberUpdateNickname(@NotNull GuildMemberUpdateNicknameEvent event) {
-			if(event.getMember().getIdLong() == 776656382010458112L) event.getMember().modifyNickname("").queue();
+			if(event.getMember().getIdLong() == 776656382010458112L) event.getMember().modifyNickname(null).queue();
 		}
 		
 		@Override

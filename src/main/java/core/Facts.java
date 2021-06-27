@@ -73,7 +73,7 @@ public class Facts {
 	
 	public static boolean readTokenFile() {
 		try {
-			DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("."), path -> path.toFile().isFile());
+			DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("data/"), path -> path.toFile().isFile());
 			for(Path path: stream) {
 				if(path.getFileName().toString().equals("token")) {
 					List<String> lines = Files.readAllLines(path);
