@@ -1,7 +1,5 @@
 package core;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -41,34 +39,6 @@ public class Facts {
 			e.printStackTrace();
 		}
 		return "";
-	}
-	
-	public static void writeString(String fact, String value) {
-		try {
-			DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("."), path -> path.toFile().isFile());
-			for(Path path: stream) {
-				if(path.getFileName().toString().equals(factURL)) {
-					BufferedWriter writer = new BufferedWriter(new FileWriter(factURL, true));
-					List<String> lines = Files.readAllLines(path);
-					boolean inserted = false;
-					for(String s: lines) {
-						if(s.startsWith(fact + ":")) {
-							s = fact + ":" + value;
-							inserted = true;
-							break;
-						}
-						writer.append(s).append('\n');
-					}
-					if(!inserted) {
-						writer.append('\n').append(fact).append(':').append(value);
-					}
-					writer.close();
-				}
-			}
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
 	public static boolean readTokenFile() {
