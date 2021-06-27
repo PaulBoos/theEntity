@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Facts {
 	
-	public static final String factURL = "facts.txt";
+	public static final String factURL = "data/facts.txt";
 	
 	public static String firstLine = "";
 	

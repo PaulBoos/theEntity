@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="Clearing up BotInstance&#10;adding workspace data recommended to be shared">
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="removed Tribe duplicate">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_27_2_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/about.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/about.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/facts.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/facts.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/Facts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Facts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/test.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/timers.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +79,7 @@
       <recent name="database" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity\data" />
       <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity" />
     </key>
   </component>
@@ -127,7 +136,7 @@
       <workItem from="1624796778394" duration="231000" />
       <workItem from="1624797022621" duration="64000" />
       <workItem from="1624797098171" duration="355000" />
-      <workItem from="1624800888368" duration="4518000" />
+      <workItem from="1624800888368" duration="5003000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -178,7 +187,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624811589982</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="removed Tribe duplicate">
+      <created>1624811865503</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1624811865503</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,6 +221,7 @@
     <MESSAGE value="Removed Token from Tracking" />
     <MESSAGE value="Cherrypicked" />
     <MESSAGE value="Clearing up BotInstance&#10;adding workspace data recommended to be shared" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clearing up BotInstance&#10;adding workspace data recommended to be shared" />
+    <MESSAGE value="removed Tribe duplicate" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed Tribe duplicate" />
   </component>
 </project>
