@@ -40,12 +40,12 @@ public class SlashCommands {
 	static void updateGuildCommands(JDA jda) {
 		jda.getGuildById(826170347207655434L).updateCommands().addCommands(
 				//TRIBEVERSE COMMANDS
-				BANK
+				
 		).queue();
 		
 		jda.getGuildById(555819034877231115L).updateCommands().addCommands(
 				//WYABRO COMMANDS
-				BANK,
+				
 				new CommandData("convert", "Convert Time into a usable Timestamp")
 						.addOption(OptionType.INTEGER, "day", "Put the day here damnit")
 						.addOption(OptionType.INTEGER, "month", "Put the month here damnit")

@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="FIRST BANKING COMMIT">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="some small fixes&#10;/bank transfer still not available in private chat">
+      <changelist_data name="Paul Boos" email="51286113+paulboos@users.noreply.github.com" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/core/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -130,7 +129,7 @@
       <workItem from="1624797098171" duration="355000" />
       <workItem from="1624800888368" duration="27397000" />
       <workItem from="1624843417826" duration="608000" />
-      <workItem from="1624877257394" duration="32662000" />
+      <workItem from="1624877257394" duration="33530000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -223,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624916135351</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="some small fixes&#10;/bank transfer still not available in private chat">
+      <created>1624920196838</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1624920196838</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,7 +262,8 @@
     <MESSAGE value="technicalities" />
     <MESSAGE value="Fixed /newturn Instant.parse(String.format(...)) mistake (&quot;20%20d&quot; &gt; &quot;%04d&quot;)&#10;&#10;Replaced Timer by TimerQueue&#10;Integrated TimerQueue into BotInstance" />
     <MESSAGE value="FIRST BANKING COMMIT" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIRST BANKING COMMIT" />
+    <MESSAGE value="some small fixes&#10;/bank transfer still not available in private chat" />
+    <option name="LAST_COMMIT_MESSAGE" value="some small fixes&#10;/bank transfer still not available in private chat" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
