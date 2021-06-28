@@ -2,7 +2,6 @@ package database;
 
 import java.sql.*;
 
-@SuppressWarnings("JpaQueryApiInspection")
 public class GuildDatabase extends Accessor {
 	
 	protected GuildDatabase(long guildID) {
@@ -12,7 +11,7 @@ public class GuildDatabase extends Accessor {
 	public synchronized long getMember(long user) throws SQLException {
 		connect();
 		PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM memberID WHERE user = ?");
-		pstmt.setLong(0, user);
+		pstmt.setLong(1, user);
 		pstmt.execute();
 		ResultSet rs = pstmt.getResultSet();
 		try {
@@ -26,7 +25,7 @@ public class GuildDatabase extends Accessor {
 	public synchronized long getGuild(long member) throws SQLException {
 		connect();
 		PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM memberID WHERE memberID = ?");
-		pstmt.setLong(0, member);
+		pstmt.setLong(1, member);
 		pstmt.execute();
 		ResultSet rs = pstmt.getResultSet();
 		try {
@@ -40,7 +39,7 @@ public class GuildDatabase extends Accessor {
 	public synchronized long getUser(long member) throws SQLException {
 		connect();
 		PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM memberID WHERE memberID = ?");
-		pstmt.setLong(0, member);
+		pstmt.setLong(1, member);
 		pstmt.execute();
 		ResultSet rs = pstmt.getResultSet();
 		try {

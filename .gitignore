@@ -1,3 +1,5 @@
 target/
 .idea/
 data/token
+data/guilds/
+/data/competitions.db

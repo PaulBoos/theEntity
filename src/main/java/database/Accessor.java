@@ -11,7 +11,7 @@ public class Accessor {
 	protected Connection conn;
 	
 	protected Accessor(String path) {
-		DATABASEPATH = path;
+		DATABASEPATH = "jdbc:sqlite:" + path;
 		try {
 			connect();
 		} catch(SQLException throwables) {

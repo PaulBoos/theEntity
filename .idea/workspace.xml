@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="theEntity:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="technicalities">
-      <change afterPath="$PROJECT_DIR$/src/main/java/timers/TimerQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="Fixed /newturn Instant.parse(String.format(...)) mistake (&quot;20%20d&quot; &gt; &quot;%04d&quot;)&#10;&#10;Replaced Timer by TimerQueue&#10;Integrated TimerQueue into BotInstance">
+      <change afterPath="$PROJECT_DIR$/src/main/java/core/Currency.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/database/BalanceManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/database/CompetitionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/core/Timer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/Accessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/Accessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/GuildDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/GuildDatabase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,19 +72,21 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="sqlite" />
+    <property name="RunConfigurationTargetLRU" value="1ae4bbc3-6bd2-4390-93c5-33c9f3ae0e89" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/data" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/The Almighty One Build" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.31587562" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -79,8 +96,11 @@
       <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity\data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity" />
       <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity\data" />
+      <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity" />
+    </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="core" />
     </key>
   </component>
   <component name="RunManager">
@@ -91,15 +111,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -114,7 +132,6 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="" />
-      <changelist id="" name="Revert: " comment="" />
       <created>1624613386432</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -122,7 +139,9 @@
       <workItem from="1624796778394" duration="231000" />
       <workItem from="1624797022621" duration="64000" />
       <workItem from="1624797098171" duration="355000" />
-      <workItem from="1624800888368" duration="24434000" />
+      <workItem from="1624800888368" duration="27397000" />
+      <workItem from="1624843417826" duration="608000" />
+      <workItem from="1624877257394" duration="28969000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -201,7 +220,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624834322191</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fixed /newturn Instant.parse(String.format(...)) mistake (&quot;20%20d&quot; &gt; &quot;%04d&quot;)&#10;&#10;Replaced Timer by TimerQueue&#10;Integrated TimerQueue into BotInstance">
+      <created>1624839883771</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1624839883771</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,7 +258,8 @@
     <MESSAGE value="moved Textfiles to /data/" />
     <MESSAGE value="/newturn day &lt;month&gt;&#10;month now optional, year not hard coded anymore, automatically calculated to be in the future&#10;&#10;some more minor changes" />
     <MESSAGE value="technicalities" />
-    <option name="LAST_COMMIT_MESSAGE" value="technicalities" />
+    <MESSAGE value="Fixed /newturn Instant.parse(String.format(...)) mistake (&quot;20%20d&quot; &gt; &quot;%04d&quot;)&#10;&#10;Replaced Timer by TimerQueue&#10;Integrated TimerQueue into BotInstance" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed /newturn Instant.parse(String.format(...)) mistake (&quot;20%20d&quot; &gt; &quot;%04d&quot;)&#10;&#10;Replaced Timer by TimerQueue&#10;Integrated TimerQueue into BotInstance" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -244,16 +271,6 @@
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/timers/TimerQueue.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/timers/TimerQueue.java</url>
-          <line>18</line>
-          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
