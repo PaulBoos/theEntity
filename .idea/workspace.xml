@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="/newturn day &lt;month&gt;&#10;month now optional, year not hard coded anymore, automatically calculated to be in the future&#10;&#10;some more minor changes">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="technicalities">
+      <change afterPath="$PROJECT_DIR$/src/main/java/timers/TimerQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/core/Facts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Facts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/Timer.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +41,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.jdks/openjdk-15/lib/src.zip!/java.sql/java/sql/ResultSet.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.jdks/openjdk-15/lib/src.zip!/java.base/java/util/ArrayDeque.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -64,7 +66,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.31587562" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
@@ -120,7 +122,7 @@
       <workItem from="1624796778394" duration="231000" />
       <workItem from="1624797022621" duration="64000" />
       <workItem from="1624797098171" duration="355000" />
-      <workItem from="1624800888368" duration="19340000" />
+      <workItem from="1624800888368" duration="24434000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -192,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624825920562</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="technicalities">
+      <created>1624834322191</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1624834322191</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,6 +231,31 @@
     <MESSAGE value="removed Tribe duplicate" />
     <MESSAGE value="moved Textfiles to /data/" />
     <MESSAGE value="/newturn day &lt;month&gt;&#10;month now optional, year not hard coded anymore, automatically calculated to be in the future&#10;&#10;some more minor changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="/newturn day &lt;month&gt;&#10;month now optional, year not hard coded anymore, automatically calculated to be in the future&#10;&#10;some more minor changes" />
+    <MESSAGE value="technicalities" />
+    <option name="LAST_COMMIT_MESSAGE" value="technicalities" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/timers/TimerQueue.java</url>
+          <line>72</line>
+          <properties class="timers.TimerQueue.Timer" method="addTail">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/timers/TimerQueue.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/timers/TimerQueue.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

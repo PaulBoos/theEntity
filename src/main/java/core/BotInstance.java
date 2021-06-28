@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.jetbrains.annotations.NotNull;
+import timers.TimerQueue;
 
 import javax.security.auth.login.LoginException;
 import java.awt.*;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayDeque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +35,7 @@ public class BotInstance {
 	
 	public static BotInstance botInstance;
 	public JDA jda;
-	public Timer tt;
+	public TimerQueue tt;
 	ConsoleInteraction console;
 	
 	public static void main(String[] args) throws IOException, UnsupportedFlavorException {
@@ -63,6 +65,7 @@ public class BotInstance {
 	
 	BotInstance(String token) throws LoginException, InterruptedException {
 		botInstance = this;
+		tt = new TimerQueue();
 		jda = JDABuilder.create(
 				token,
 				GatewayIntent.GUILD_MEMBERS,
@@ -106,7 +109,10 @@ public class BotInstance {
 						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("now", "NEXT TURN RIGHT NOW!")
 						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
-				new CommandData("howlong", "Tell me how long it takes until the next turn.")
+				new CommandData("howlong", "Tell me how long it takes until the next turn."),
+				new CommandData("testtimer", "Create a timer")
+						.addOption(OptionType.INTEGER, "minutes", "how long to wait in minutes", true)
+						.addOption(OptionType.INTEGER, "seconds", "how long to wait in seconds", true)
 		).queue();
 		jda.getGuildById(826170347207655434L).updateCommands().addCommands(
 				new CommandData("howlong", "Tell me how long it takes until the next turn.")
@@ -147,7 +153,7 @@ public class BotInstance {
 									LocalDate.now().getYear()+1;
 					Instant i = Instant.parse(
 							String.format(
-									"20%02d-%02d-%02dT12:00:00.00Z", year, month, day
+									"%04d-%02d-%02dT12:00:00.00Z", year, month, day
 							)
 					);
 					event.reply("\nCreating timer for " + i.toString().replace("T", " @ ").replace("Z", " GMT")).complete();
@@ -206,7 +212,7 @@ public class BotInstance {
 						String message =
 								Duration.between(
 										Instant.now(),
-										Instant.ofEpochSecond(tt.getExecutionTime()))
+										Instant.ofEpochSecond(tt.getHead().getExecutionTime()))
 										.toString();
 						message = message.split("M")[0]
 								.replace("PT","")
@@ -218,12 +224,21 @@ public class BotInstance {
 					}
 				}
 				case "help", "about" -> event.reply("Very... empty here.").queue();
+				case "testtimer" -> {
+					event.deferReply().queue();
+					tt.addTimer(
+							new TimerQueue.Timer(
+									Instant.now().plusSeconds((event.getOption("minutes").getAsLong() * 60) + (event.getOption("seconds").getAsLong())),
+									instance -> instance.jda.getTextChannelById(858858060931923968L).sendMessage("Testtimer over.").queue()
+							)
+					);
+				}
 				default -> event.reply("I currently have no idea how to react to this.").queue();
 			}
 		}
 		
 		public void announceNewTurn(Instant instant, int turn) {
-			tt = new Timer(instant, instance -> {
+			tt.addTimer(new TimerQueue.Timer(instant, instance -> {
 				instance.jda.getTextChannelById(826170348756140125L).sendMessage(jda.getGuildById(826170347207655434L).getRoleById(845263298446491690L).getAsMention()).embed(
 						new EmbedBuilder()
 								.setTitle("A New Turn Has Begun.")
@@ -233,11 +248,11 @@ public class BotInstance {
 								.build()).queue();
 				for(Tribe t: Tribe.newTurnSubs) t.announceNewTurn(instance.jda, turn);
 				tt = null;
-			});
+			}));
 		}
 		
 		public void announceNewTurn(Instant instant) {
-			tt = new Timer(instant, instance -> {
+			tt.addTimer(new TimerQueue.Timer(instant, instance -> {
 				instance.jda.getTextChannelById(826170348756140125L).sendMessage(jda.getGuildById(826170347207655434L).getRoleById(845263298446491690L).getAsMention()).embed(
 						new EmbedBuilder()
 								.setTitle("A New Turn Has Begun.")
@@ -247,7 +262,7 @@ public class BotInstance {
 								.build()).queue();
 				for(Tribe t: Tribe.newTurnSubs) t.announceNewTurn(instance.jda);
 				tt = null;
-			});
+			}));
 		}
 		
 		@Override
@@ -281,8 +296,8 @@ public class BotInstance {
 					String message =
 							Duration.between(
 									Instant.now(),
-									Instant.ofEpochSecond(tt.getExecutionTime()))
-									.toString();
+									Instant.ofEpochSecond(tt.getHead().getExecutionTime())
+							).toString();
 					message = message.split("M")[0]
 							.replace("PT","")
 							.replace("H"," hours, ");
@@ -370,7 +385,7 @@ public class BotInstance {
 				String message =
 						Duration.between(
 								Instant.now(),
-								Instant.ofEpochSecond(tt.getExecutionTime()))
+								Instant.ofEpochSecond(tt.getHead().getExecutionTime()))
 								.toString();
 				message = message.split("M")[0]
 						.replace("PT","")
