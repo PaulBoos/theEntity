@@ -45,7 +45,7 @@ public class SlashCommands {
 		
 		jda.getGuildById(555819034877231115L).updateCommands().addCommands(
 				//WYABRO COMMANDS
-				
+				BANK,
 				new CommandData("convert", "Convert Time into a usable Timestamp")
 						.addOption(OptionType.INTEGER, "day", "Put the day here damnit")
 						.addOption(OptionType.INTEGER, "month", "Put the month here damnit")
@@ -68,7 +68,15 @@ public class SlashCommands {
 						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("testtimer", "Create a timer")
 						.addOption(OptionType.INTEGER, "minutes", "how long to wait in minutes", true)
-						.addOption(OptionType.INTEGER, "seconds", "how long to wait in seconds", true)
+						.addOption(OptionType.INTEGER, "seconds", "how long to wait in seconds", true),
+				new CommandData("cheat", "Cheat some money")
+						.addOptions(
+								new OptionData(OptionType.INTEGER, "amount", "amount of credit you want to cheat", true),
+								new OptionData(OptionType.STRING, "currency", "currency you want to send", true)
+										.addChoice("Crowns", "crown")
+										.addChoice("Stars", "star"),
+								new OptionData(OptionType.USER, "receiver", "The User you want to cheat credit", true)
+						)
 		).queue();
 	}
 	

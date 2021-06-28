@@ -9,22 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="Fixed /newturn Instant.parse(String.format(...)) mistake (&quot;20%20d&quot; &gt; &quot;%04d&quot;)&#10;&#10;Replaced Timer by TimerQueue&#10;Integrated TimerQueue into BotInstance">
-      <change afterPath="$PROJECT_DIR$/src/main/java/core/Currency.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/database/BalanceManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/database/CompetitionManager.java" afterDir="false" />
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="FIRST BANKING COMMIT">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/Accessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/Accessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/GuildDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/GuildDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +130,7 @@
       <workItem from="1624797098171" duration="355000" />
       <workItem from="1624800888368" duration="27397000" />
       <workItem from="1624843417826" duration="608000" />
-      <workItem from="1624877257394" duration="28969000" />
+      <workItem from="1624877257394" duration="32662000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -227,7 +216,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624839883771</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="FIRST BANKING COMMIT">
+      <created>1624916135351</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1624916135351</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,7 +255,8 @@
     <MESSAGE value="/newturn day &lt;month&gt;&#10;month now optional, year not hard coded anymore, automatically calculated to be in the future&#10;&#10;some more minor changes" />
     <MESSAGE value="technicalities" />
     <MESSAGE value="Fixed /newturn Instant.parse(String.format(...)) mistake (&quot;20%20d&quot; &gt; &quot;%04d&quot;)&#10;&#10;Replaced Timer by TimerQueue&#10;Integrated TimerQueue into BotInstance" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed /newturn Instant.parse(String.format(...)) mistake (&quot;20%20d&quot; &gt; &quot;%04d&quot;)&#10;&#10;Replaced Timer by TimerQueue&#10;Integrated TimerQueue into BotInstance" />
+    <MESSAGE value="FIRST BANKING COMMIT" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIRST BANKING COMMIT" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

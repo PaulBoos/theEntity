@@ -120,25 +120,27 @@ class Handler extends ListenerAdapter {
 						if(om == null) {
 							event.reply(
 									"Your balance is: " +
-											BotInstance.botInstance.bank.getBalance(event.getMember().getIdLong(),Currency.CROWNS)
+											BotInstance.botInstance.bank.getBalance(event.getUser().getIdLong(),Currency.CROWNS)
 											+ " " + Currency.CROWNS.emote
 											+ " + " +
-											BotInstance.botInstance.bank.getBalance(event.getMember().getIdLong(),Currency.STARS)
+											BotInstance.botInstance.bank.getBalance(event.getUser().getIdLong(),Currency.STARS)
 											+ " " + Currency.STARS.emote
 							).queue();
 						} else {
 							Currency currency = Currency.getCurrency(om.getAsString());
 							event.reply(
 									"Your balance is: " +
-											BotInstance.botInstance.bank.getBalance(event.getMember().getIdLong(), currency)
+											BotInstance.botInstance.bank.getBalance(event.getUser().getIdLong(), currency)
 											+ " " + currency.emote
 							).queue();
 						}
 					}
 					case "transfer" -> {
-						if(event.getOption("receiver").getAsMember().getUser().isBot()) {
+						if(!event.isFromGuild()) {
+							event.reply("I'm sorry, but currently `/bank transfer` is a guild-only command.\nYou can however still use `/bank balance`").queue();
+						} else if(event.getOption("receiver").getAsMember().getUser().isBot()) {
 							event.reply("You cannot send credit to bots.").queue();
-						} else if(event.getOption("receiver").getAsMember().getIdLong() == event.getMember().getIdLong()) {
+						} else if(event.getOption("receiver").getAsMember().getIdLong() == event.getUser().getIdLong()) {
 							event.reply("You cannot send credit to yourself.").queue();
 						} else if(
 								BotInstance.botInstance.bank.withdraw(
@@ -168,6 +170,14 @@ class Handler extends ListenerAdapter {
 								instance -> instance.jda.getTextChannelById(858858060931923968L).sendMessage("Testtimer over.").queue()
 						)
 				);
+			}
+			case "cheat" -> {
+				BotInstance.botInstance.bank.addBalance(
+						event.getOption("receiver").getAsMember().getIdLong(),
+						Currency.getCurrency(event.getOption("currency").getAsString()),
+						(int) event.getOption("amount").getAsLong());
+				event.reply("Cheated " + event.getOption("amount").getAsLong() + " " +
+						Currency.getCurrency(event.getOption("currency").getAsString()).emote + " to " + event.getOption("receiver").getAsMember().getEffectiveName() + ".").queue();
 			}
 			default -> event.reply("I currently have no idea how to react to this.").queue();
 		}
@@ -333,4 +343,5 @@ class Handler extends ListenerAdapter {
 			event.getChannel().sendMessage("Next turn in: " + message).queue();
 		}
 	}
+	
 }
