@@ -9,10 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="some small fixes&#10;/bank transfer still not available in private chat">
-      <changelist_data name="Paul Boos" email="51286113+paulboos@users.noreply.github.com" />
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="removed test.db">
+      <change afterPath="$PROJECT_DIR$/src/main/java/market/BoothController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/market/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/market/RequestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/finance/Currency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/Accessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/Accessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/BalanceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +44,7 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -99,13 +111,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -129,7 +143,8 @@
       <workItem from="1624797098171" duration="355000" />
       <workItem from="1624800888368" duration="27397000" />
       <workItem from="1624843417826" duration="608000" />
-      <workItem from="1624877257394" duration="33530000" />
+      <workItem from="1624877257394" duration="83938000" />
+      <workItem from="1625057831576" duration="7078000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -229,11 +244,21 @@
       <option name="project" value="LOCAL" />
       <updated>1624920196838</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="removed test.db">
+      <created>1624921238810</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1624921238810</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -248,6 +273,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="Adding maven's /target/ and intellij's /.idea/" />
     <MESSAGE value="Maven compiled classes removed&#10;SQLite Dialect added to IJ IDEA, Library moved to top." />
     <MESSAGE value="test Database moved to top&#10;Guild Database Accessor now outsourced from General Purpose Accessor" />
@@ -263,7 +289,9 @@
     <MESSAGE value="Fixed /newturn Instant.parse(String.format(...)) mistake (&quot;20%20d&quot; &gt; &quot;%04d&quot;)&#10;&#10;Replaced Timer by TimerQueue&#10;Integrated TimerQueue into BotInstance" />
     <MESSAGE value="FIRST BANKING COMMIT" />
     <MESSAGE value="some small fixes&#10;/bank transfer still not available in private chat" />
-    <option name="LAST_COMMIT_MESSAGE" value="some small fixes&#10;/bank transfer still not available in private chat" />
+    <MESSAGE value="removed test.db" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed test.db" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
