@@ -47,6 +47,14 @@ public class BalanceManager extends Accessor {
 		setBalance(memberID, currency, getBalance(memberID, currency) + amount);
 	}
 	
+	public void credit(long memberID, int crowns, int stars) {
+		if(crowns < 0 || stars < 0) {
+			System.out.println("addBalance() with crowns/stars < 0, aborting");
+			return;
+		}
+		setBalance(memberID, getBalance(memberID, Currency.CROWNS) + crowns, getBalance(memberID, Currency.STARS) + stars);
+	}
+	
 	public boolean withdraw(long memberID, Currency currency, int amount, boolean forceWithdrawal) {
 		if(amount < 0) {
 			System.out.println("withdraw() with amount < 0, aborting");
@@ -102,6 +110,21 @@ public class BalanceManager extends Accessor {
 			if(pstmt.executeUpdate() == 0) {
 				pstmt.close();
 				if(insertMember(memberID)) setBalance(memberID, currency, newBalance);
+			}
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+		}
+	}
+	
+	public void setBalance(long memberID, int newCrowns, int newStars) {
+		try {
+			PreparedStatement pstmt = conn.prepareStatement("UPDATE Money SET balance1 = ?, balance2 = ? WHERE memberid = ?");
+			pstmt.setInt(1, newCrowns);
+			pstmt.setInt(2, newStars);
+			pstmt.setLong(3, memberID);
+			if(pstmt.executeUpdate() == 0) {
+				pstmt.close();
+				if(insertMember(memberID)) setBalance(memberID, newCrowns, newStars);
 			}
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
