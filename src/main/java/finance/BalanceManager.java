@@ -39,7 +39,7 @@ public class BalanceManager extends Accessor {
 		return 0;
 	}
 	
-	public void addBalance(long memberID, Currency currency, int amount) {
+	public void credit(long memberID, Currency currency, int amount) {
 		if(amount < 0) {
 			System.out.println("addBalance() with amount < 0, aborting");
 			return;
@@ -64,6 +64,31 @@ public class BalanceManager extends Accessor {
 			int balance = getBalance(memberID, currency);
 			if(amount > balance) return false;
 			setBalance(memberID, currency, getBalance(memberID, currency) - amount);
+			return true;
+		}
+	}
+	
+	public boolean withdraw(long memberID, int crowns, int stars, boolean forceWithdrawal) {
+		if(crowns < 0 || stars < 0) {
+			System.out.println("withdraw() with crowns/stars < 0, aborting");
+			return false;
+		}
+		try {
+			connect();
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		if(forceWithdrawal) {
+			setBalance(memberID, Currency.CROWNS, getBalance(memberID, Currency.CROWNS) - crowns);
+			setBalance(memberID, Currency.STARS, getBalance(memberID, Currency.STARS) - stars);
+			return true;
+		} else {
+			int crownbalance = getBalance(memberID, Currency.CROWNS);
+			int starsbalance = getBalance(memberID, Currency.STARS);
+			if(crowns > crownbalance) return false;
+			if(stars > starsbalance) return false;
+			setBalance(memberID, Currency.CROWNS, getBalance(memberID, Currency.CROWNS) - crowns);
+			setBalance(memberID, Currency.STARS, getBalance(memberID, Currency.STARS) - stars);
 			return true;
 		}
 	}
