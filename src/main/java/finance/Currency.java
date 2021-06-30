@@ -1,6 +1,4 @@
-package core;
-
-import database.BalanceManager;
+package finance;
 
 public enum Currency {
 	

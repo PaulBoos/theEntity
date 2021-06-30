@@ -1,6 +1,6 @@
-package database;
+package finance;
 
-import core.Currency;
+import database.Accessor;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,13 +8,9 @@ import java.sql.SQLException;
 
 public class BalanceManager extends Accessor {
 	
-	public BalanceManager() {
+	public BalanceManager() throws SQLException {
 		super("data/finance.db");
-		try {
-			checkMoneyTable();
-		} catch(SQLException throwables) {
-			throwables.printStackTrace();
-		}
+		checkMoneyTable();
 	}
 	
 	private void checkMoneyTable() throws SQLException {
@@ -44,10 +40,18 @@ public class BalanceManager extends Accessor {
 	}
 	
 	public void addBalance(long memberID, Currency currency, int amount) {
+		if(amount < 0) {
+			System.out.println("addBalance() with amount < 0, aborting");
+			return;
+		}
 		setBalance(memberID, currency, getBalance(memberID, currency) + amount);
 	}
 	
 	public boolean withdraw(long memberID, Currency currency, int amount, boolean forceWithdrawal) {
+		if(amount < 0) {
+			System.out.println("withdraw() with amount < 0, aborting");
+			return false;
+		}
 		try {
 			connect();
 		} catch(SQLException throwables) {
@@ -86,5 +90,35 @@ public class BalanceManager extends Accessor {
 		return pstmt.execute();
 	}
 	
+	public BankAccount getAccount(long buyerid) {
+		try {
+			connect();
+			PreparedStatement pstmt = conn.prepareStatement(
+					"SELECT * FROM Money WHERE memberid = ?");
+			pstmt.setLong(1, buyerid);
+			if(pstmt.execute()) {
+				ResultSet rs = pstmt.getResultSet();
+				if(rs.isClosed()) return null;
+				else return new BankAccount(rs.getInt("crowns"), rs.getInt("stars"));
+			} else {
+				System.out.println("Could not execute");
+				return null;
+			}
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static class BankAccount {
+		
+		public final int crowns, stars;
+		
+		BankAccount(int crowns, int stars) {
+			this.crowns = crowns;
+			this.stars = stars;
+		}
+		
+	}
+	
 }
-//282551955975307264 (Meine ID)
