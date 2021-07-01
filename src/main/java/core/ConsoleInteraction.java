@@ -1,5 +1,6 @@
 package core;
 
+import finance.Currency;
 import net.dv8tion.jda.api.JDA;
 
 import java.io.BufferedReader;
@@ -30,7 +31,7 @@ public class ConsoleInteraction {
 			System.out.println("Updating Global Slash Commands");
 		});
 		commands.put("cheat", args -> {
-			BotInstance.botInstance.bank.addBalance(
+			BotInstance.botInstance.bank.credit(
 					Long.parseLong(args[0]),
 					Currency.getCurrency(args[1]),
 					Integer.parseInt(args[2])

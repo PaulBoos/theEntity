@@ -4,3 +4,4 @@ data/token
 data/guilds/
 /data/competitions.db
 /data/finance.db
+/data/booths.db

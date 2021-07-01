@@ -147,7 +147,7 @@ public class BalanceManager extends Accessor {
 			if(pstmt.execute()) {
 				ResultSet rs = pstmt.getResultSet();
 				if(rs.isClosed()) return null;
-				else return new BankAccount(rs.getInt("crowns"), rs.getInt("stars"));
+				else return new BankAccount(rs.getInt("balance1"), rs.getInt("balance2"));
 			} else {
 				System.out.println("Could not execute");
 				return null;

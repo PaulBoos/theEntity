@@ -9,21 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="removed test.db">
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="Added \utils\&#10;Added MessageComponents.java&#10;Added MessageComponents.computePrice()">
       <change afterPath="$PROJECT_DIR$/src/main/java/market/BoothController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/market/ProductController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/market/RequestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/core/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/finance/Currency.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/database/Accessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/Accessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/BalanceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/MessageComponents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/MessageComponents.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +142,7 @@
       <workItem from="1624800888368" duration="27397000" />
       <workItem from="1624843417826" duration="608000" />
       <workItem from="1624877257394" duration="83938000" />
-      <workItem from="1625057831576" duration="7078000" />
+      <workItem from="1625057831576" duration="28372000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -251,7 +249,42 @@
       <option name="project" value="LOCAL" />
       <updated>1624921238810</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Moved BalanceManager.java to \finance\&#10;Added Subclass BalanceManager.BankAccount&#10;Added BalanceManager.getAccount()&#10;&#10;Moved Currency.java to \finance\">
+      <created>1625087808470</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1625087808470</updated>
+    </task>
+    <task id="LOCAL-00017" summary="IntelliJ is annoying somtimes...">
+      <created>1625087854779</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1625087854779</updated>
+    </task>
+    <task id="LOCAL-00018" summary="renamed BalanceManager.addBalance() to BalanceManager.credit()&#10;added BalanceManager.withdraw() for both currencies">
+      <created>1625088975292</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1625088975292</updated>
+    </task>
+    <task id="LOCAL-00019" summary="added BalanceManager.setBalance() for both currencies&#10;added BalanceManager.credit() for both currencies">
+      <created>1625089449105</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1625089449105</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Added \utils\&#10;Added MessageComponents.java&#10;Added MessageComponents.computePrice()">
+      <created>1625092600335</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1625092600335</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,7 +323,12 @@
     <MESSAGE value="FIRST BANKING COMMIT" />
     <MESSAGE value="some small fixes&#10;/bank transfer still not available in private chat" />
     <MESSAGE value="removed test.db" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed test.db" />
+    <MESSAGE value="Moved BalanceManager.java to \finance\&#10;Added Subclass BalanceManager.BankAccount&#10;Added BalanceManager.getAccount()&#10;&#10;Moved Currency.java to \finance\" />
+    <MESSAGE value="IntelliJ is annoying somtimes..." />
+    <MESSAGE value="renamed BalanceManager.addBalance() to BalanceManager.credit()&#10;added BalanceManager.withdraw() for both currencies" />
+    <MESSAGE value="added BalanceManager.setBalance() for both currencies&#10;added BalanceManager.credit() for both currencies" />
+    <MESSAGE value="Added \utils\&#10;Added MessageComponents.java&#10;Added MessageComponents.computePrice()" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added \utils\&#10;Added MessageComponents.java&#10;Added MessageComponents.computePrice()" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

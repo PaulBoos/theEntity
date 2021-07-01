@@ -1,6 +1,7 @@
 package core;
 
-import database.BalanceManager;
+import finance.BalanceManager;
+import market.BoothController;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -15,6 +16,7 @@ import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class BotInstance {
 	
@@ -23,6 +25,7 @@ public class BotInstance {
 	public TimerQueue tt;
 	ConsoleInteraction console;
 	BalanceManager bank;
+	BoothController booths;
 	
 	public static void main(String[] args) throws IOException, UnsupportedFlavorException {
 		if(Facts.readTokenFile()) {
@@ -70,13 +73,18 @@ public class BotInstance {
 				MemberCachePolicy.ALL
 		).build();
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> jda.shutdown()));
-		System.out.println("Login Successful");
 		jda.awaitReady();
 		setPresence();
 		SlashCommands.updateGuildCommands(jda);
 		jda.addEventListener(new Handler(this));
 		console = new ConsoleInteraction();
-		bank = new BalanceManager();
+		try {
+			bank = new BalanceManager();
+			booths = new BoothController();
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		
 	}
 	
 	public void setPresence() {

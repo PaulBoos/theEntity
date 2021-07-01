@@ -8,9 +8,9 @@ public class Accessor {
 	
 	
 	private final String DATABASEPATH;
-	protected Connection conn;
+	public Connection conn;
 	
-	protected Accessor(String path) {
+	public Accessor(String path) {
 		DATABASEPATH = "jdbc:sqlite:" + path;
 		try {
 			connect();
@@ -19,7 +19,7 @@ public class Accessor {
 		}
 	}
 	
-	protected void connect() throws SQLException {
+	public void connect() throws SQLException {
 		if(conn == null) {
 			conn = DriverManager.getConnection(DATABASEPATH);
 		}
