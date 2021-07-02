@@ -203,6 +203,7 @@ class Handler extends ListenerAdapter {
 						));
 			}
 			case "booth" -> {
+				if(event.getChannel().getIdLong() == 849428863779733564L)
 				switch(event.getSubcommandName()) {
 					case "open" -> {
 						if(botInstance.booths.isOpen(event.getUser().getIdLong())) {
@@ -226,8 +227,10 @@ class Handler extends ListenerAdapter {
 					}
 					default -> event.reply("howw").queue();
 				}
+				else event.reply("Currently, you cannot do this here. Go to <#849428863779733564>").queue();
 			}
 			case "product" -> {
+				if(event.getChannel().getIdLong() == 849428863779733564L)
 				switch(event.getSubcommandName()) {
 					case "list" -> {
 						event.deferReply(event.getOption("secret").getAsBoolean()).queue();
@@ -374,8 +377,9 @@ class Handler extends ListenerAdapter {
 							event.reply("\u274E Closed trading of " + productname).queue();
 						else event.reply("\u2754 Product not found.").queue();
 					}
-					default -> event.reply("As it seems, Becher has not yet implemented /product " + event.getSubcommandName() + "").queue();
+					default -> event.reply("As it seems, Becher has not yet implemented `/product " + event.getSubcommandName() + "`").queue();
 				}
+				else event.reply("Currently, you cannot do this here. Go to <#849428863779733564>").queue();
 			}
 			case "buy" -> {
 				long productid = event.getOption("id").getAsLong();

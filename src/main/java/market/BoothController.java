@@ -51,6 +51,11 @@ public class BoothController extends Accessor {
 					"SELECT open FROM Booth WHERE memberid = ?"
 			);
 			pstmt.setLong(1, memberid);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.isClosed()) {
+				changeOpen(memberid, false);
+				return false;
+			}
 			return Boolean.parseBoolean(pstmt.executeQuery().getString("open"));
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();

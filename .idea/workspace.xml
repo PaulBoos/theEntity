@@ -9,19 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="Added \utils\&#10;Added MessageComponents.java&#10;Added MessageComponents.computePrice()">
-      <change afterPath="$PROJECT_DIR$/src/main/java/market/BoothController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/market/ProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/market/RequestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="not important">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/Accessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/Accessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/MessageComponents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/MessageComponents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/market/BoothController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/market/BoothController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,19 +102,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.BotInstance" />
@@ -142,7 +122,10 @@
       <workItem from="1624800888368" duration="27397000" />
       <workItem from="1624843417826" duration="608000" />
       <workItem from="1624877257394" duration="83938000" />
-      <workItem from="1625057831576" duration="28372000" />
+      <workItem from="1625057831576" duration="29749000" />
+      <workItem from="1625143220457" duration="532000" />
+      <workItem from="1625144536851" duration="600000" />
+      <workItem from="1625251357262" duration="3307000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -284,7 +267,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625092600335</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Trading Feature rollout">
+      <created>1625114947315</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1625114947315</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,7 +318,8 @@
     <MESSAGE value="renamed BalanceManager.addBalance() to BalanceManager.credit()&#10;added BalanceManager.withdraw() for both currencies" />
     <MESSAGE value="added BalanceManager.setBalance() for both currencies&#10;added BalanceManager.credit() for both currencies" />
     <MESSAGE value="Added \utils\&#10;Added MessageComponents.java&#10;Added MessageComponents.computePrice()" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added \utils\&#10;Added MessageComponents.java&#10;Added MessageComponents.computePrice()" />
+    <MESSAGE value="Trading Feature rollout" />
+    <option name="LAST_COMMIT_MESSAGE" value="Trading Feature rollout" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

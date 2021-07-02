@@ -12,6 +12,13 @@ public class SlashCommands {
 			HOWLONG = new CommandData("howlong", "Tell me how long it takes until the next turn."),
 			HELP = new CommandData("help", "Bechotron Help Site"),
 			ABOUT = new CommandData("about", "Legal Stuff"),
+			CONVERT = new CommandData("convert", "Convert Time into a usable Timestamp")
+					.addOption(OptionType.INTEGER, "day", "Put the day here damnit")
+					.addOption(OptionType.INTEGER, "month", "Put the month here damnit")
+					.addOption(OptionType.INTEGER, "year", "Put the year here damnit")
+					.addOption(OptionType.INTEGER, "hour", "Put the hour here damnit")
+					.addOption(OptionType.INTEGER, "minute", "Put the minute here damnit")
+					.addOption(OptionType.INTEGER, "second", "Put the second here damnit"),
 			BANK = new CommandData("bank", "Money related stuff [WIP]")
 					.addSubcommands(
 							new SubcommandData("balance", "Request to know your own balance.")
@@ -85,25 +92,17 @@ public class SlashCommands {
 	static void updateGlobalCommands(JDA jda) {
 		jda.updateCommands().addCommands(
 				//GLOBAL COMMANDS
-				HELP, ABOUT, HOWLONG, BANK, BOOTH, PRODUCT, BUY, ACCEPT, DECLINE, CANCEL
+				HELP, ABOUT, CONVERT, HOWLONG, BANK, BOOTH, PRODUCT, BUY, ACCEPT, DECLINE, CANCEL
 		).queue();
 	}
 	
 	static void updateGuildCommands(JDA jda) {
 		jda.getGuildById(826170347207655434L).updateCommands().addCommands(
 				//TRIBEVERSE COMMANDS
-				BOOTH, PRODUCT
 		).queue();
 		
 		jda.getGuildById(555819034877231115L).updateCommands().addCommands(
 				//WYABRO COMMANDS
-				new CommandData("convert", "Convert Time into a usable Timestamp")
-						.addOption(OptionType.INTEGER, "day", "Put the day here damnit")
-						.addOption(OptionType.INTEGER, "month", "Put the month here damnit")
-						.addOption(OptionType.INTEGER, "year", "Put the year here damnit")
-						.addOption(OptionType.INTEGER, "hour", "Put the hour here damnit")
-						.addOption(OptionType.INTEGER, "minute", "Put the minute here damnit")
-						.addOption(OptionType.INTEGER, "second", "Put the second here damnit"),
 				new CommandData("newturn", "Start a new turn at 12:00 GMT")
 						.addOption(OptionType.INTEGER, "day", "Put the day here damnit", true)
 						.addOption(OptionType.INTEGER, "month", "Put the month here damnit")
