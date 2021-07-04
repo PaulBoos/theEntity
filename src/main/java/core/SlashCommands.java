@@ -51,12 +51,20 @@ public class SlashCommands {
 									.addOption(OptionType.INTEGER, "id", "The id of the product", true),
 							new SubcommandData("close", "Make your product unavailable")
 									.addOption(OptionType.INTEGER, "id", "The id of the product", true),
-							new SubcommandData("add", "Register a new product.")
+							new SubcommandData("register", "Register a product")
 									.addOptions(
 											new OptionData(OptionType.STRING, "name", "How you want to call it.", true),
 											new OptionData(OptionType.INTEGER, "crowns", "How many stars you want", true),
 											new OptionData(OptionType.INTEGER, "stars", "How many stars you want", true),
 											new OptionData(OptionType.INTEGER, "stock", "What you have in Stock. -1 for infinite stocks.", true),
+											new OptionData(OptionType.STRING, "autotrade", "If you want to automatically trade.", true)
+													.addChoice("automatic", "true")
+													.addChoice("manual", "false")),
+							new SubcommandData("add", "Register a new product.")
+									.addOptions(
+											new OptionData(OptionType.INTEGER, "source", "The source item you want to add", true),
+											new OptionData(OptionType.INTEGER, "crowns", "How many stars you want", true),
+											new OptionData(OptionType.INTEGER, "stars", "How many stars you want", true),
 											new OptionData(OptionType.STRING, "autotrade", "If you want to automatically trade.", true)
 													.addChoice("automatic", "true")
 													.addChoice("manual", "false")),

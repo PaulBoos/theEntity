@@ -1,7 +1,6 @@
 package core;
 
 import finance.Currency;
-import net.dv8tion.jda.api.JDA;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,11 +17,6 @@ public class ConsoleInteraction {
 		commands.put("shutdown", args -> {
 			System.out.println("Disconnecting...");
 			BotInstance.botInstance.jda.shutdown();
-			try {
-				BotInstance.botInstance.jda.awaitStatus(JDA.Status.SHUTDOWN);
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
 			System.out.println("Shutting down...");
 			System.exit(0);
 		});

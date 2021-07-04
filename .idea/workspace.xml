@@ -9,12 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="not important">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" afterDir="false" />
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="minor changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/market/BoothController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/market/BoothController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/market/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/market/ProductController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +69,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last.edited.regexp" value="" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/The Almighty One Build" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -125,7 +127,8 @@
       <workItem from="1625057831576" duration="29749000" />
       <workItem from="1625143220457" duration="532000" />
       <workItem from="1625144536851" duration="600000" />
-      <workItem from="1625251357262" duration="3307000" />
+      <workItem from="1625251357262" duration="19598000" />
+      <workItem from="1625378283196" duration="6798000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -274,7 +277,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625114947315</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="minor changes">
+      <created>1625268664941</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1625268664941</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,7 +329,8 @@
     <MESSAGE value="added BalanceManager.setBalance() for both currencies&#10;added BalanceManager.credit() for both currencies" />
     <MESSAGE value="Added \utils\&#10;Added MessageComponents.java&#10;Added MessageComponents.computePrice()" />
     <MESSAGE value="Trading Feature rollout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Trading Feature rollout" />
+    <MESSAGE value="minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor changes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -332,6 +343,16 @@
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/market/ProductController.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/market/ProductController.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

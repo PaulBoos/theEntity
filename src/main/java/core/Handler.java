@@ -29,6 +29,7 @@ class Handler extends ListenerAdapter {
 	
 	private final BotInstance botInstance;
 	private static final long LOGCHANNEL = 858858060931923968L;
+	private static final long[] mods = new long[] {282551955975307264L /*Becher*/, };
 	
 	public Handler(BotInstance botInstance) {
 		this.botInstance = botInstance;
@@ -251,36 +252,69 @@ class Handler extends ListenerAdapter {
 							event.getHook().editOriginalEmbeds(eb.build()).queue();
 						} else event.getHook().editOriginal("The user has no booth, or no products.").queue();
 					}
-					case "add" -> {
+					case "register" -> {
 						String name = event.getOption("name").getAsString();
 						int crowns = (int) event.getOption("crowns").getAsLong(),
-							stars = (int) event.getOption("stars").getAsLong(),
-							stock = (int) event.getOption("stock").getAsLong();
+								stars = (int) event.getOption("stars").getAsLong(),
+								stock = (int) event.getOption("stock").getAsLong();
 						boolean autotrade = Boolean.parseBoolean(event.getOption("autotrade").getAsString());
 						long id = botInstance.booths.products.registerProduct(
 								event.getUser().getIdLong(), name, crowns, stars, stock, autotrade, 5);
 						if(id != 0)
-						event.replyEmbeds(
-								new EmbedBuilder()
-										.setTitle("\u2705  You registered your new Product **\"__" + name + "__\"**")
-										.addField(
-										"with id *`#" + id + "`*.",
-										"Current stock is **" + (stock == -1 ? "infinite \uD83D\uDD01" : stock + " \uD83D\uDCE6") +
-										"**.\nTrade for **" + (
-										(crowns == 0 && stars == 0) ?
-										"free" :
-										(crowns == 0) ?
-										stars + " " + Currency.STARS.emote :
-										(stars == 0) ?
-										crowns + " " + Currency.CROWNS.emote :
-										crowns + " " + Currency.CROWNS.emote +
-										" + " + stars + " " + Currency.STARS.emote) +
-										(autotrade ? " automatically \uD83D\uDD01**." : " manually \u270B**.") +
-										"\nYou can allow purchase with `/product open " + id + "`",
-										false
-										).build()
-						).queue();
+							event.replyEmbeds(
+									new EmbedBuilder()
+											.setTitle("\u2705  You registered your new Product **\"__" + name + "__\"**")
+											.addField(
+													"with id *`#" + id + "`*.",
+													"Current stock is **" + (stock == -1 ? "infinite \uD83D\uDD01" : stock + " \uD83D\uDCE6") +
+															"**.\nTrade for **" + (
+															(crowns == 0 && stars == 0) ?
+																	"free" :
+																	(crowns == 0) ?
+																			stars + " " + Currency.STARS.emote :
+																			(stars == 0) ?
+																					crowns + " " + Currency.CROWNS.emote :
+																					crowns + " " + Currency.CROWNS.emote +
+																							" + " + stars + " " + Currency.STARS.emote) +
+															(autotrade ? " automatically \uD83D\uDD01**." : " manually \u270B**.") +
+															"\nYou can allow purchase with `/product open " + id + "`",
+													false
+											).build()
+							).queue();
 						else event.reply("Could not register product.").queue();
+					}
+					case "add" -> {
+						int crowns = (int) event.getOption("crowns").getAsLong(),
+								stars = (int) event.getOption("stars").getAsLong();
+						boolean autotrade = Boolean.parseBoolean(event.getOption("autotrade").getAsString());
+						/*if(botInstance.booths.products.getOwner(event.getOption("source").getAsLong()) == event.getUser().getIdLong())
+							event.reply("\u2755 You cannot add your own product.").queue();
+						else {*/
+							long id = botInstance.booths.products.registerForeignProduct(
+									event.getOption("source").getAsLong(), event.getUser().getIdLong(), crowns, stars, autotrade, 5);
+							if(id != 0)
+								event.replyEmbeds(
+										new EmbedBuilder()
+												.setTitle("\u2705  You added the Product **\"__" + botInstance.booths.products.getName(id) + "__\"**")
+												.addField(
+														"with id *`#" + id + "`*.",
+														"You do not have starting stock, you will have to buy some." +
+																".\nTrade for **" + (
+																(crowns == 0 && stars == 0) ?
+																		"free" :
+																		(crowns == 0) ?
+																				stars + " " + Currency.STARS.emote :
+																				(stars == 0) ?
+																						crowns + " " + Currency.CROWNS.emote :
+																						crowns + " " + Currency.CROWNS.emote +
+																								" + " + stars + " " + Currency.STARS.emote) +
+																(autotrade ? " automatically \uD83D\uDD01**." : " manually \u270B**.") +
+																"\nYou can allow purchase with `/product open " + id + "`",
+														false
+												).build()
+								).queue();
+							else event.reply("\u2755 Could not add product.").queue();
+						//}
 					}
 					case "remove" -> {
 						long productid = event.getOption("id").getAsLong();
@@ -288,7 +322,7 @@ class Handler extends ListenerAdapter {
 						
 						if(productname == null)
 							event.reply("\u2754 Product not found.").queue();
-						else if(!botInstance.booths.products.checkOwnership(event.getUser().getIdLong(), productid))
+						else if(!(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong()))
 							event.reply("\u2755 You are not the owner of " + productname).queue();
 						else if(botInstance.booths.products.dropProduct(productid))
 							event.reply("<:trashcan:859412077114556416> Deleted " + productname + ".").queue();
@@ -300,7 +334,9 @@ class Handler extends ListenerAdapter {
 								newproductname = event.getOption("name").getAsString();
 						if(productname.equals(newproductname))
 							event.reply("The product is already called " + newproductname).queue();
-						else if(!botInstance.booths.products.checkOwnership(event.getUser().getIdLong(), productid))
+						else if()
+						
+						else if(!(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong()))
 							event.reply("\u2755 You are not the owner of " + botInstance.booths.products.getName(productid)).queue();
 						else if(botInstance.booths.products.rename(productid, newproductname))
 							event.reply("\uD83C\uDFF7 Renamed " + productname + " to " + newproductname).queue();
@@ -313,7 +349,7 @@ class Handler extends ListenerAdapter {
 								stars = (int) event.getOption("stars").getAsLong();
 						if(productname == null)
 							event.reply("\u2754 Product not found.").queue();
-						else if(!botInstance.booths.products.checkOwnership(event.getUser().getIdLong(), productid))
+						else if(!(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong()))
 							event.reply("\u2755 You are not the owner of " + productname).queue();
 						else if(botInstance.booths.products.reprice(productid, crowns, stars))
 							event.reply("\uD83E\uDE99 Repriced " + productname + " to " + ((crowns == 0 && stars == 0) ?
@@ -328,7 +364,7 @@ class Handler extends ListenerAdapter {
 						boolean autotrade = Boolean.parseBoolean(event.getOption("autotrade").getAsString());
 						if(productname == null)
 							event.reply("\u2754 Product not found.").queue();
-						else if(!botInstance.booths.products.checkOwnership(event.getUser().getIdLong(), productid))
+						else if(!(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong()))
 							event.reply("\u2755 You are not the owner of " + productname).queue();
 						else if(botInstance.booths.products.changeAutotrade(productid, autotrade))
 							event.reply(autotrade ? productname + " trade set to **automatic \uD83D\uDD01**." :
@@ -337,18 +373,28 @@ class Handler extends ListenerAdapter {
 					}
 					case "restock" -> {
 						long productid = event.getOption("id").getAsLong();
-						String productname = botInstance.booths.products.getName(productid);
+						ProductController.ProductContainer product = botInstance.booths.products.getProduct(productid);
 						int stock = (int) event.getOption("stock").getAsLong();
 						
-						if(productname == null)
+						if(product == null)
 							event.reply("\u2754 Product not found.").queue();
 						else if(stock < -1)
 							event.reply("\u2755 You can't set the stock below -1").queue();
-						else if(!botInstance.booths.products.checkOwnership(event.getUser().getIdLong(), productid))
-							event.reply("\u2755 You are not the owner of " + productname).queue();
-						else if(botInstance.booths.products.restock(productid, stock))
-							event.reply("\uD83D\uDCE6 Restocked the product " + (stock == -1 ? "without limit." : ("to " + stock + "."))).queue();
-						else event.reply("\u2754 Product not found.").queue();
+						else if(product.isForeign) {
+							long adminid = 0;
+							long itemid = product.itemid;
+							while(adminid == 0) {
+								if(botInstance.booths.products.isForeign(itemid))
+									itemid = botInstance.booths.products.getItemId(itemid);
+								else
+									adminid = botInstance.booths.products.getOwner(itemid);
+							}
+							if(!(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong()))
+								event.reply("\u2755 You are not the owner of " + productname).queue();
+							else if(botInstance.booths.products.restock(productid, stock))
+								event.reply("\uD83D\uDCE6 Restocked the product " + (stock == -1 ? "without limit." : ("to " + stock + "."))).queue();
+							else event.reply("\u2754 Product not found.").queue();
+						}
 					}
 					case "open" -> {
 						long productid = event.getOption("id").getAsLong();
@@ -358,7 +404,7 @@ class Handler extends ListenerAdapter {
 							event.reply("\u2754 Product not found.").queue();
 						else if(botInstance.booths.products.isOpen(productid))
 							event.reply("\u2705 " + productname + " is already open for trading").queue();
-						else if(!botInstance.booths.products.checkOwnership(event.getUser().getIdLong(), productid))
+						else if(!(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong()))
 							event.reply("\u2755 You are not the owner of " + productname).queue();
 						else if(botInstance.booths.products.open(productid, true))
 							event.reply("\u2705 Opened trading of " + productname).queue();
@@ -371,7 +417,7 @@ class Handler extends ListenerAdapter {
 							event.reply("\u2754 Product not found.").queue();
 						else if(!botInstance.booths.products.isOpen(productid))
 							event.reply("\u274E " + productname + " is not being sold.").queue();
-						else if(!botInstance.booths.products.checkOwnership(event.getUser().getIdLong(), productid))
+						else if(!(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong()))
 							event.reply("\u2755 You are not the owner of " + productname).queue();
 						else if(botInstance.booths.products.open(productid, false))
 							event.reply("\u274E Closed trading of " + productname).queue();
@@ -393,20 +439,20 @@ class Handler extends ListenerAdapter {
 				else if(product == null || !product.open)
 					event.reply("\u2754 The requested product does not exist or is currently not for sale").queue();
 				else if(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong())
-					event.reply("\u2754 You cannot buy your own products.").queue();
+					event.reply("\u2755 You cannot buy your own products.").queue();
 				else if(account.crowns < product.crowns * amount ||
 						account.stars < product.stars * amount)
 					event.reply("\u2755 You cannot afford this product. ").queue();
-				else if(product.stock < amount && product.stock != -1)
-					event.reply("\u2755 Stock is too low.").queue();
 				else if(product.auto) {
-					if(!botInstance.bank.withdraw(buyerid, product.crowns * amount, product.stars * amount, false))
+					if(product.stock < amount && product.stock != -1)
+						event.reply("\u2755 Stock is too low.").queue();
+					else if(!botInstance.bank.withdraw(buyerid, product.crowns * amount, product.stars * amount, false))
 						event.reply("\u2755 Could not process withdrawal. Cancelled transaction.").queue();
 					else {
 						botInstance.bank.credit(product.ownerid, product.crowns * amount, product.stars * amount);
 						if(!botInstance.booths.products.removeStock(productid, amount))
-							System.out.println("Could not remove stock. THIS SHOULD NEVER HAPPEN! PID=" + productid + " AMOUNT=" + amount);
-						event.reply("\u2705 You successfully bought " + amount + "x **__" + product.name + "__**").queue();
+							event.reply("Could not remove stock. THIS SHOULD NEVER HAPPEN! REPORTING <@282551955975307264> PID=" + productid + " VOL=" + amount + " ST=" + product.stock).queue();
+						else event.reply("\u2705 You successfully bought " + amount + "x **__" + product.name + "__**").queue();
 					}
 				} else {
 					if(!botInstance.bank.withdraw(buyerid, product.crowns * amount, product.stars * amount, false))
@@ -429,7 +475,8 @@ class Handler extends ListenerAdapter {
 										"**.\n\nAs you set this product's trade manual, you have to \n`/accept " + requestid + "` or\n`/decline " + requestid + "`",
 										false)
 								.build()).queue();
-						event.reply("\u2705 Created trade-request. Awaiting reply. Type `/cancel " + requestid + "` to cancel.").queue();
+						event.reply("\u2705 Created trade-request. Awaiting reply. Type `/cancel " + requestid + "` to cancel." +
+								(product.stock < amount ? "\n_(Notice: You created a request above stock, the seller will have to supply more to accept.)_":"")).queue();
 					}
 				}
 			}
@@ -660,6 +707,28 @@ class Handler extends ListenerAdapter {
 			}
 		} catch(Exception e) {
 			if(!e.getMessage().equals("Not important")) e.printStackTrace();
+		}
+		if(event.getMessage().getContentRaw().startsWith("makebinary")) {
+			StringBuilder out = new StringBuilder();
+			for(String arg: event.getMessage().getContentRaw().substring(11).split(" ")) {
+				char[] chars = arg.toCharArray();
+				int[] ints = new int[chars.length];
+				for(int i = 0; i < chars.length; i++)
+					ints[i] = chars[i];
+				for(int Int: ints) {
+					StringBuilder currentInt = new StringBuilder();
+					int pot = 1;
+					while(Int > 0) {
+						currentInt.append(Int % ((int) Math.pow(2, pot)) > 0 ? '1':'0');
+						Int -= Int % (int) Math.pow(2, pot);
+						pot++;
+					}
+					out.append(currentInt.reverse());
+					out.append(' ');
+				}
+			}
+			event.getMessage().delete().queue();
+			event.getChannel().sendMessage(out.toString()).queue();
 		}
 	}
 	

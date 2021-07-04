@@ -72,7 +72,6 @@ public class BotInstance {
 		).setMemberCachePolicy(
 				MemberCachePolicy.ALL
 		).build();
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> jda.shutdown()));
 		jda.awaitReady();
 		setPresence();
 		SlashCommands.updateGuildCommands(jda);

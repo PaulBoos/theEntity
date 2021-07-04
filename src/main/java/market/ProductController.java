@@ -14,18 +14,34 @@ public class ProductController {
 	ProductController(BoothController boothController) throws SQLException {
 		this.booths = boothController;
 		checkProductTable();
+		checkForeignProductTable();
 	}
 	
 	private void checkProductTable() throws SQLException {
 		booths.connect();
 		PreparedStatement pstmt = booths.conn.prepareStatement(
 				"CREATE TABLE IF NOT EXISTS Product " +
-						"(productid INTEGER primary key AUTOINCREMENT, " +
+						"(productid INTEGER primary key, " +
 						"ownerID INTEGER, " +
 						"name TEXT, " +
 						"crowns INTEGER, " +
 						"stars INTEGER, " +
 						"stock INTEGER, " +
+						"auto INTEGER, " +
+						"open INTEGER DEFAULT 0)");
+		pstmt.execute();
+		pstmt.close();
+	}
+	private void checkForeignProductTable() throws SQLException {
+		booths.connect();
+		PreparedStatement pstmt = booths.conn.prepareStatement(
+				"CREATE TABLE IF NOT EXISTS ForeignProduct " +
+						"(productid INTEGER primary key, " +
+						"itemid INTEGER, " +
+						"ownerID INTEGER, " +
+						"crowns INTEGER, " +
+						"stars INTEGER, " +
+						"stock INTEGER DEFAULT 0, " +
 						"auto INTEGER, " +
 						"open INTEGER DEFAULT 0)");
 		pstmt.execute();
@@ -56,6 +72,30 @@ public class ProductController {
 			return 0;
 		}
 	}
+	public long registerForeignProduct(long itemid, long ownerid, int crowns, int stars, boolean autotrade, int productidbitlength) {
+		if(!isAdded(itemid, ownerid))
+		try {
+			booths.connect();
+			PreparedStatement pstmt = booths.conn.prepareStatement(
+					"INSERT INTO ForeignProduct (productid, itemid, ownerID, crowns, stars, auto) " +
+							"VALUES (?,?,?,?,?,?)");
+			long pid = generateProductId(productidbitlength);
+			if(pid == 0) return 0;
+			pstmt.setLong(1,pid);
+			pstmt.setLong(2,itemid);
+			pstmt.setLong(3,ownerid);
+			pstmt.setInt(4,crowns);
+			pstmt.setInt(5,stars);
+			pstmt.setBoolean(6,autotrade);
+			pstmt.execute();
+			pstmt.close();
+			return pid;
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+			return 0;
+		}
+		else return 0;
+	}
 	
 	public boolean dropProduct(long productid) {
 		try {
@@ -65,13 +105,19 @@ public class ProductController {
 			pstmt.setLong(1, productid);
 			boolean out = pstmt.executeUpdate() > 0;
 			pstmt.close();
+			if(!out) {
+				pstmt = booths.conn.prepareStatement(
+						"DELETE FROM ForeignProduct WHERE productid = ?");
+				pstmt.setLong(1, productid);
+				out = pstmt.executeUpdate() > 0;
+				pstmt.close();
+			}
 			return out;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
 			return false;
 		}
 	}
-	
 	public boolean rename(long productid, String name) {
 		try {
 			booths.connect();
@@ -87,7 +133,6 @@ public class ProductController {
 			return false;
 		}
 	}
-	
 	public boolean reprice(long productid, int crowns, int stars) {
 		try {
 			booths.connect();
@@ -98,13 +143,21 @@ public class ProductController {
 			pstmt.setLong(3, productid);
 			boolean out = pstmt.executeUpdate() > 0;
 			pstmt.close();
+			if(!out) {
+				pstmt = booths.conn.prepareStatement(
+						"UPDATE ForeignProduct SET crowns = ?, stars = ? WHERE productid = ?");
+				pstmt.setInt(1, crowns);
+				pstmt.setInt(2, stars);
+				pstmt.setLong(3, productid);
+				out = pstmt.executeUpdate() > 0;
+				pstmt.close();
+			}
 			return out;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
 			return false;
 		}
 	}
-	
 	public boolean changeAutotrade(long productid, boolean bool) {
 		try {
 			booths.connect();
@@ -114,13 +167,20 @@ public class ProductController {
 			pstmt.setLong(2, productid);
 			boolean out = pstmt.executeUpdate() > 0;
 			pstmt.close();
+			if(!out) {
+				pstmt = booths.conn.prepareStatement(
+						"UPDATE ForeignProduct SET auto = ? WHERE productid = ?");
+				pstmt.setBoolean(1, bool);
+				pstmt.setLong(2, productid);
+				out = pstmt.executeUpdate() > 0;
+				pstmt.close();
+			}
 			return out;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
 			return false;
 		}
 	}
-	
 	public boolean open(long productid, boolean open) {
 		try {
 			booths.connect();
@@ -130,13 +190,20 @@ public class ProductController {
 			pstmt.setLong(2, productid);
 			boolean out = pstmt.executeUpdate() > 0;
 			pstmt.close();
+			if(!out) {
+				pstmt = booths.conn.prepareStatement(
+						"UPDATE ForeignProduct SET open = ? WHERE productid = ?");
+				pstmt.setBoolean(1, open);
+				pstmt.setLong(2, productid);
+				out = pstmt.executeUpdate() > 0;
+				pstmt.close();
+			}
 			return out;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
 			return false;
 		}
 	}
-	
 	public boolean isOpen(long productid) {
 		try {
 			booths.connect();
@@ -144,7 +211,13 @@ public class ProductController {
 					"SELECT open FROM Product WHERE productid = ?");
 			pstmt.setLong(1, productid);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.isClosed()) return false;
+			if(rs.isClosed()) {
+				pstmt = booths.conn.prepareStatement(
+						"SELECT open FROM ForeignProduct WHERE productid = ?");
+				pstmt.setLong(1, productid);
+				rs = pstmt.executeQuery();
+				if(rs.isClosed()) return false;
+			}
 			boolean out = rs.getBoolean("open");
 			pstmt.close();
 			return out;
@@ -153,39 +226,23 @@ public class ProductController {
 			return false;
 		}
 	}
-	
 	public String getName(long productid) {
 		try {
 			booths.connect();
 			PreparedStatement pstmt = booths.conn.prepareStatement(
-					"SELECT name FROM Product WHERE productid = ?");
+					"SELECT name FROM Product LEFT JOIN ForeignProduct ON Product.productid = ForeignProduct.itemid WHERE ForeignProduct.productid = ? OR Product.productid = ?");
 			pstmt.setLong(1, productid);
-			String out = pstmt.executeQuery().getString("name");
+			pstmt.setLong(2, productid);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.isClosed()) return null;
+			String out = rs.getString("name");
 			pstmt.close();
 			return out;
 		} catch(SQLException throwables) {
-			if(throwables.getMessage().equals("ResultSet closed")) return null;
 			throwables.printStackTrace();
 			return null;
 		}
 	}
-	
-	public boolean checkOwnership(long userid, long productid) {
-		try {
-			booths.connect();
-			PreparedStatement pstmt = booths.conn.prepareStatement(
-					"SELECT ownerID FROM Product WHERE productid = ?");
-			pstmt.setLong(1, productid);
-			boolean out = pstmt.executeQuery().getLong("ownerid") == userid;
-			pstmt.close();
-			return out;
-		} catch(SQLException throwables) {
-			if(throwables.getMessage().equals("ResultSet closed")) return false;
-			throwables.printStackTrace();
-			return false;
-		}
-	}
-	
 	public long getOwner(long productid) {
 		try {
 			booths.connect();
@@ -202,6 +259,24 @@ public class ProductController {
 		}
 	}
 	
+	//FOREIGN STUFF
+	public boolean isAdded(long productid, long ownerid) {
+		try {
+			booths.connect();
+			PreparedStatement pstmt = booths.conn.prepareStatement(
+					"SELECT * FROM Product INNER JOIN ForeignProduct ON Product.productid = ForeignProduct.itemid WHERE ForeignProduct.ownerID = ? AND (ForeignProduct.productid = ? OR Product.productid = ?)");
+			pstmt.setLong(1, ownerid);
+			pstmt.setLong(2, productid);
+			pstmt.setLong(3, productid);
+			ResultSet rs = pstmt.executeQuery();
+			boolean out = !rs.isClosed();
+			pstmt.close();
+			return out;
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+			return false;
+		}
+	}
 	
 	//STOCK MANIPULATION
 	public boolean restock(long productid, int stock) {
@@ -214,6 +289,14 @@ public class ProductController {
 			pstmt.setLong(2, productid);
 			boolean out = pstmt.executeUpdate() > 0;
 			pstmt.close();
+			if(!out) {
+				pstmt = booths.conn.prepareStatement(
+						"UPDATE ForeignProduct SET stock = ? WHERE productid = ?");
+				pstmt.setInt(1, stock);
+				pstmt.setLong(2, productid);
+				out = pstmt.executeUpdate() > 0;
+				pstmt.close();
+			}
 			return out;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
@@ -234,6 +317,14 @@ public class ProductController {
 			pstmt.setLong(2, productid);
 			boolean out = pstmt.executeUpdate() > 0;
 			pstmt.close();
+			if(!out) {
+				pstmt = booths.conn.prepareStatement(
+						"UPDATE ForeignProduct SET stock = ? WHERE productid = ?");
+				pstmt.setInt(1, stock - amount);
+				pstmt.setLong(2, productid);
+				out = pstmt.executeUpdate() > 0;
+				pstmt.close();
+			}
 			return out;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
@@ -251,7 +342,14 @@ public class ProductController {
 					"SELECT stock FROM Product WHERE productid = ?");
 			pstmt.setLong(1, productid);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.isClosed()) return -2;
+			if(rs.isClosed()) {
+				pstmt.close();
+				pstmt = booths.conn.prepareStatement(
+						"SELECT stock FROM ForeignProduct WHERE productid = ?");
+				pstmt.setLong(1, productid);
+				rs = pstmt.executeQuery();
+				if(rs.isClosed()) return -2;
+			}
 			int out = rs.getInt("stock");
 			pstmt.close();
 			return out;
@@ -270,16 +368,26 @@ public class ProductController {
 					"SELECT * FROM Product WHERE productid = ?");
 			pstmt.setLong(1, productid);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.isClosed()) return null;
+			boolean isForeign = false;
+			if(rs.isClosed()) {
+				pstmt = booths.conn.prepareStatement(
+						"SELECT * FROM ForeignProduct WHERE productid = ?");
+				pstmt.setLong(1, productid);
+				rs = pstmt.executeQuery();
+				if(rs.isClosed()) return null;
+				isForeign = true;
+			}
 			ProductContainer out = new ProductContainer(
-						rs.getLong("productid"),
-						rs.getLong("ownerid"),
-						rs.getString("name"),
-						rs.getInt("crowns"),
-						rs.getInt("stars"),
-						rs.getInt("stock"),
-						rs.getBoolean("auto"),
-						rs.getBoolean("open"));
+				rs.getLong("productid"),
+				isForeign ? rs.getLong("itemid") : 0,
+				rs.getLong("ownerid"),
+				isForeign ? getName(rs.getLong("itemid")) : rs.getString("name"),
+				rs.getInt("crowns"),
+				rs.getInt("stars"),
+				rs.getInt("stock"),
+				rs.getBoolean("auto"),
+				rs.getBoolean("open"),
+				isForeign);
 			pstmt.close();
 			return out;
 		} catch(SQLException throwables) {
@@ -287,7 +395,6 @@ public class ProductController {
 			return null;
 		}
 	}
-	
 	public List<ProductContainer> getProducts(long ownerid) {
 		ArrayList<ProductContainer> out = new ArrayList<>();
 		try {
@@ -296,20 +403,39 @@ public class ProductController {
 					"SELECT * FROM Product WHERE ownerID = ?");
 			pstmt.setLong(1, ownerid);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.isClosed()) return out;
 			while(rs.next()) {
 				out.add(new ProductContainer(
 						rs.getLong("productid"),
+						rs.getLong("itemid"),
 						rs.getLong("ownerid"),
 						rs.getString("name"),
 						rs.getInt("crowns"),
 						rs.getInt("stars"),
 						rs.getInt("stock"),
 						rs.getBoolean("auto"),
-						rs.getBoolean("open")
+						rs.getBoolean("open"),
+						false
 				));
 			}
 			pstmt.close();
+			pstmt = booths.conn.prepareStatement(
+					"SELECT * FROM ForeignProduct WHERE ownerID = ?");
+			pstmt.setLong(1, ownerid);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				out.add(new ProductContainer(
+						rs.getLong("productid"),
+						rs.getLong("itemid"),
+						rs.getLong("ownerid"),
+						rs.getString("name"),
+						rs.getInt("crowns"),
+						rs.getInt("stars"),
+						rs.getInt("stock"),
+						rs.getBoolean("auto"),
+						rs.getBoolean("open"),
+						true
+				));
+			}
 			return out;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
@@ -317,15 +443,20 @@ public class ProductController {
 		}
 	}
 	
+	public boolean isForeign(long itemid) {
+	
+	}
+	
 	public static class ProductContainer {
 		
-		public long productid, ownerid;
-		public boolean open, auto;
-		public int stock, stars, crowns;
-		public String name;
+		public final long productid, itemid, ownerid;
+		public final boolean open, auto, isForeign;
+		public final int stock, stars, crowns;
+		public final String name;
 		
-		ProductContainer(long productid, long ownerid, String name, int crowns, int stars, int stock, boolean auto, boolean open) {
+		ProductContainer(long productid, long itemid, long ownerid, String name, int crowns, int stars, int stock, boolean auto, boolean open, boolean isForeign) {
 			this.productid = productid;
+			this.itemid = itemid;
 			this.ownerid = ownerid;
 			this.name = name;
 			this.crowns = crowns;
@@ -333,6 +464,7 @@ public class ProductController {
 			this.stock = stock;
 			this.auto = auto;
 			this.open = open;
+			this.isForeign = isForeign;
 		}
 		
 	}
@@ -340,6 +472,9 @@ public class ProductController {
 	//INTERNAL HELPER
 	private long generateProductId(int productidbitlength) {
 		return booths.generateGenericId("Product", "productid", productidbitlength);
+	}
+	private long generateForeignId(int productidbitlength) {
+		return booths.generateGenericId("ForeignProduct", "productid", productidbitlength);
 	}
 	
 }
