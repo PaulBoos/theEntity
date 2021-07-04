@@ -444,7 +444,31 @@ public class ProductController {
 	}
 	
 	public boolean isForeign(long itemid) {
+		try {
+			PreparedStatement pstmt = booths.conn.prepareStatement(
+					"SELECT * FROM ForeignProduct WHERE productid = ?");
+			pstmt.setLong(1, itemid);
+			ResultSet rs = pstmt.executeQuery();
+			return !rs.isClosed();
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+			return false;
+		}
+	}
 	
+	public long getItemId(long itemid) {
+		try {
+			booths.connect();
+			PreparedStatement pstmt = booths.conn.prepareStatement(
+					"SELECT * FROM ForeignProduct WHERE productid = ?");
+			pstmt.setLong(1, itemid);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.isClosed()) return 0;
+			return rs.getLong("itemid");
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+			return 0;
+		}
 	}
 	
 	public static class ProductContainer {

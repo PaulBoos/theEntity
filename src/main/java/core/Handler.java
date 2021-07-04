@@ -329,16 +329,18 @@ class Handler extends ListenerAdapter {
 						else event.reply("\u2754 Product not found.").queue();
 					}
 					case "rename" -> {
-						long productid = event.getOption("id").getAsLong();
-						String productname = botInstance.booths.products.getName(productid),
+						ProductController.ProductContainer product = botInstance.booths.products.getProduct(event.getOption("id").getAsLong());
+						String productname = product.name,
 								newproductname = event.getOption("name").getAsString();
-						if(productname.equals(newproductname))
+						if(product.isForeign)
+							event.reply("You cannot edit foreign products.").queue();
+						else if(productname.equals(newproductname))
 							event.reply("The product is already called " + newproductname).queue();
-						else if()
-						
-						else if(!(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong()))
-							event.reply("\u2755 You are not the owner of " + botInstance.booths.products.getName(productid)).queue();
-						else if(botInstance.booths.products.rename(productid, newproductname))
+						else if(product.open)
+							event.reply("The product is open for purchase, it cannot be renamed. Use `/product close " + product.productid).queue();
+						else if(!(botInstance.booths.products.getOwner(product.productid) == event.getUser().getIdLong()))
+							event.reply("\u2755 You are not the owner of " + botInstance.booths.products.getName(product.productid)).queue();
+						else if(botInstance.booths.products.rename(product.productid, newproductname))
 							event.reply("\uD83C\uDFF7 Renamed " + productname + " to " + newproductname).queue();
 						else event.reply("\u2754 Product not found.").queue();
 					}

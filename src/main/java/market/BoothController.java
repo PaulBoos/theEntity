@@ -108,8 +108,8 @@ public class BoothController extends Accessor {
 			pstmt.close();
 			Random random = new Random();
 			bitLength = (int) Math.pow(2, 64-bitLength);
-			long rand = random.nextLong() / bitLength;							//Just using ints because Discord sucks
-			while(longs.contains(rand) || rand < 1) rand = random.nextInt();	//seriously, fuck Discord
+			int rand = random.nextInt() / bitLength;									//Just using ints because Discord sucks
+			while(longs.contains((long) rand) || rand < 1) rand = random.nextInt();		//seriously, fuck Discord
 			return rand;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
