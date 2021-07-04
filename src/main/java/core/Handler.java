@@ -392,7 +392,7 @@ class Handler extends ListenerAdapter {
 									adminid = botInstance.booths.products.getOwner(itemid);
 							}
 							if(!(botInstance.booths.products.getOwner(productid) == event.getUser().getIdLong()))
-								event.reply("\u2755 You are not the owner of " + productname).queue();
+								event.reply("\u2755 You are not the owner of " + product.name).queue();
 							else if(botInstance.booths.products.restock(productid, stock))
 								event.reply("\uD83D\uDCE6 Restocked the product " + (stock == -1 ? "without limit." : ("to " + stock + "."))).queue();
 							else event.reply("\u2754 Product not found.").queue();
