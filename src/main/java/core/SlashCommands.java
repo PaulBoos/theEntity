@@ -29,11 +29,21 @@ public class SlashCommands {
 									),
 							new SubcommandData("transfer", "Transfer money to someone else")
 									.addOptions(
-											new OptionData(OptionType.INTEGER, "amount", "amount of credit you want to transfer", true),
-											new OptionData(OptionType.STRING, "currency", "currency you want to send", true)
+											new OptionData(OptionType.INTEGER, "amount", "Amount of credit you want to transfer", true),
+											new OptionData(OptionType.STRING, "currency", "Currency you want to send", true)
 													.addChoice("Crowns", "crown")
 													.addChoice("Stars", "star"),
 											new OptionData(OptionType.USER, "receiver", "The User you want to send credit", true)
+									),
+							new SubcommandData("exchange", "Exchange Currencies")
+									.addOptions(
+											new OptionData(OptionType.INTEGER, "amount", "Amount of credit you want to exchange", true),
+											new OptionData(OptionType.STRING, "currencyfrom", "Currency you want to exchange", true)
+													.addChoice("Crowns", "crown")
+													.addChoice("Stars", "star"),
+											new OptionData(OptionType.STRING, "currencyto", "Currency you want to exchange into", true)
+													.addChoice("Crowns", "crown")
+													.addChoice("Stars", "star")
 									)
 					),
 			BOOTH = new CommandData("booth", "Edit your booth")
@@ -51,7 +61,7 @@ public class SlashCommands {
 									.addOption(OptionType.INTEGER, "id", "The id of the product", true),
 							new SubcommandData("close", "Make your product unavailable")
 									.addOption(OptionType.INTEGER, "id", "The id of the product", true),
-							new SubcommandData("register", "Register a product")
+							new SubcommandData("register", "Register a new product")
 									.addOptions(
 											new OptionData(OptionType.STRING, "name", "How you want to call it.", true),
 											new OptionData(OptionType.INTEGER, "crowns", "How many stars you want", true),
@@ -60,7 +70,7 @@ public class SlashCommands {
 											new OptionData(OptionType.STRING, "autotrade", "If you want to automatically trade.", true)
 													.addChoice("automatic", "true")
 													.addChoice("manual", "false")),
-							new SubcommandData("add", "Register a new product.")
+							new SubcommandData("add", "Add a foreign product.")
 									.addOptions(
 											new OptionData(OptionType.INTEGER, "source", "The source item you want to add", true),
 											new OptionData(OptionType.INTEGER, "crowns", "How many stars you want", true),
@@ -96,6 +106,7 @@ public class SlashCommands {
 					.addOption(OptionType.INTEGER, "id", "ID of the request you want to decline"),
 			CANCEL = new CommandData("cancel", "Cancel a trade request")
 					.addOption(OptionType.INTEGER, "id", "ID of the request you want to cancel");
+			
 	
 	static void updateGlobalCommands(JDA jda) {
 		jda.updateCommands().addCommands(
@@ -107,10 +118,36 @@ public class SlashCommands {
 	static void updateGuildCommands(JDA jda) {
 		jda.getGuildById(826170347207655434L).updateCommands().addCommands(
 				//TRIBEVERSE COMMANDS
+				new CommandData("cheat", "Cheat some money")
+						.addOptions(
+								new OptionData(OptionType.INTEGER, "amount", "amount of credit you want to cheat", true),
+								new OptionData(OptionType.STRING, "currency", "currency you want to send", true)
+										.addChoice("Crowns", "crown")
+										.addChoice("Stars", "star"),
+								new OptionData(OptionType.MENTIONABLE, "receiver", "The User/Role you want to cheat credit", true)
+						)
 		).queue();
 		
 		jda.getGuildById(555819034877231115L).updateCommands().addCommands(
 				//WYABRO COMMANDS
+				new CommandData("tribe", "Update a tribe")
+						.addSubcommands(
+								new SubcommandData("vengir", "Update Vengir")
+										.addOption(OptionType.INTEGER, "stars", "amount of stars to distribute", true)
+										.addOption(OptionType.STRING, "tech", "Tech prices", true),
+								new SubcommandData("aimo", "Update Ai-Mo")
+										.addOption(OptionType.INTEGER, "stars", "amount of stars to distribute", true)
+										.addOption(OptionType.STRING, "tech", "Tech prices", true),
+								new SubcommandData("hoodrick", "Update Hoodrick")
+										.addOption(OptionType.INTEGER, "stars", "amount of stars to distribute", true)
+										.addOption(OptionType.STRING, "tech", "Tech prices", true),
+								new SubcommandData("bardur", "Update Bardur")
+										.addOption(OptionType.INTEGER, "stars", "amount of stars to distribute", true)
+										.addOption(OptionType.STRING, "tech", "Tech prices", true),
+								new SubcommandData("imperius", "Update Imperius")
+										.addOption(OptionType.INTEGER, "stars", "amount of stars to distribute", true)
+										.addOption(OptionType.STRING, "tech", "Tech prices", true)
+						),
 				new CommandData("newturn", "Start a new turn at 12:00 GMT")
 						.addOption(OptionType.INTEGER, "day", "Put the day here damnit", true)
 						.addOption(OptionType.INTEGER, "month", "Put the month here damnit")
@@ -126,15 +163,7 @@ public class SlashCommands {
 						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("testtimer", "Create a timer")
 						.addOption(OptionType.INTEGER, "minutes", "how long to wait in minutes", true)
-						.addOption(OptionType.INTEGER, "seconds", "how long to wait in seconds", true),
-				new CommandData("cheat", "Cheat some money")
-						.addOptions(
-								new OptionData(OptionType.INTEGER, "amount", "amount of credit you want to cheat", true),
-								new OptionData(OptionType.STRING, "currency", "currency you want to send", true)
-										.addChoice("Crowns", "crown")
-										.addChoice("Stars", "star"),
-								new OptionData(OptionType.USER, "receiver", "The User you want to cheat credit", true)
-						)
+						.addOption(OptionType.INTEGER, "seconds", "how long to wait in seconds", true)
 		).queue();
 	}
 	

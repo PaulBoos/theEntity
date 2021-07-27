@@ -39,6 +39,15 @@ public class BalanceManager extends Accessor {
 		return 0;
 	}
 	
+	public void eraseStars() {
+		try {
+			PreparedStatement pstmt = conn.prepareStatement("UPDATE Money SET balance2 = 0");
+			pstmt.executeUpdate();
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+		}
+	}
+	
 	public void credit(long memberID, Currency currency, int amount) {
 		if(amount < 0) {
 			System.out.println("addBalance() with amount < 0, aborting");
@@ -109,7 +118,7 @@ public class BalanceManager extends Accessor {
 			pstmt.setLong(2, memberID);
 			if(pstmt.executeUpdate() == 0) {
 				pstmt.close();
-				if(insertMember(memberID)) setBalance(memberID, currency, newBalance);
+				if(insertMember(memberID)) credit(memberID, currency, newBalance);
 			}
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();

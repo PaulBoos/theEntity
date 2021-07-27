@@ -9,11 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="random changes">
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="&#10;&#10;ConsoleInteraction.java &gt;&#10;    Updated Console - every Command returns a Message now.&#10;    added surrogate command">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/market/BoothController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/market/BoothController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/market/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/market/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/Tribe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Tribe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/CompetitionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/CompetitionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/MessageComponents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/MessageComponents.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,10 +53,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/.jdks/openjdk-15/lib/src.zip!/java.sql/java/sql/ResultSet.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.jdks/openjdk-15/lib/src.zip!/java.base/java/util/ArrayDeque.java" root0="SKIP_INSPECTION" />
-  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -68,7 +73,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last.edited.regexp" value="" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/The Almighty One Build" />
+    <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/The Almighty One" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -76,14 +81,16 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.31587562" />
+    <property name="project.structure.side.proportion" value="0.113895215" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="core" />
       <recent name="database" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\LordBecher\Documents\GitHub\theEntity\data" />
       <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity\data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -127,6 +134,20 @@
       <workItem from="1625144536851" duration="600000" />
       <workItem from="1625251357262" duration="19598000" />
       <workItem from="1625378283196" duration="8978000" />
+      <workItem from="1625426978625" duration="65000" />
+      <workItem from="1625428578690" duration="58000" />
+      <workItem from="1625428742349" duration="78000" />
+      <workItem from="1625682860143" duration="1946000" />
+      <workItem from="1625687016416" duration="388000" />
+      <workItem from="1626085270276" duration="6937000" />
+      <workItem from="1626105126695" duration="791000" />
+      <workItem from="1626105975614" duration="1019000" />
+      <workItem from="1626119117169" duration="697000" />
+      <workItem from="1626460250495" duration="411000" />
+      <workItem from="1626461761438" duration="43000" />
+      <workItem from="1627211324997" duration="16759000" />
+      <workItem from="1627242334174" duration="6971000" />
+      <workItem from="1627405380321" duration="2831000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -342,14 +363,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/timers/TimerQueue.java</url>
-          <line>72</line>
-          <properties class="timers.TimerQueue.Timer" method="addTail">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/market/ProductController.java</url>
           <line>91</line>

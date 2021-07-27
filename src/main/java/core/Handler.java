@@ -5,7 +5,10 @@ import finance.Currency;
 import market.ProductController;
 import market.RequestController;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.IMentionable;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.PrivateChannel;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -29,7 +32,6 @@ class Handler extends ListenerAdapter {
 	
 	private final BotInstance botInstance;
 	private static final long LOGCHANNEL = 858858060931923968L;
-	private static final long[] mods = new long[] {282551955975307264L /*Becher*/, };
 	
 	public Handler(BotInstance botInstance) {
 		this.botInstance = botInstance;
@@ -38,6 +40,7 @@ class Handler extends ListenerAdapter {
 	@Override
 	public synchronized void onSlashCommand(@NotNull SlashCommandEvent event) {
 		switch(event.getName()) {
+			case "tribe" -> event.reply(Tribe.handleUpdate(event)).queue();
 			case "testtimer" -> {
 				event.deferReply().queue();
 				botInstance.tt.addTimer(
@@ -187,21 +190,69 @@ class Handler extends ListenerAdapter {
 							event.reply("You do not have enough credit.").queue();
 						}
 					}
+					case "exchange" -> {
+						switch(Currency.getCurrency(event.getOption("currencyfrom").getAsString())) {
+							case STARS -> {
+								switch(Currency.getCurrency(event.getOption("currencyto").getAsString())) {
+									case CROWNS -> {
+										if(botInstance.bank.withdraw(event.getMember().getIdLong(), Currency.STARS, (int) event.getOption("amount").getAsLong(), false)) {
+											botInstance.bank.credit(event.getMember().getIdLong(), Currency.CROWNS, (int) (event.getOption("amount").getAsLong() * 10));
+											event.reply("\uD83D\uDCB1 Success! You exchanged " + (int) event.getOption("amount").getAsLong() + " " + Currency.STARS.emote + " for " + (int) (event.getOption("amount").getAsLong() * 10) + " " + Currency.CROWNS.emote).queue();
+										} else event.reply("❌ You do not have enough stars.").queue();
+									}
+									default -> event.reply("❌ You cannot exchange stars for " + event.getOption("currencyto").getAsString() + "s").queue();
+								}
+							}
+							case CROWNS ->
+									event.reply("❌ You cannot exchange crowns for stars.").queue();
+						}
+					}
 					default -> System.out.println("WHAT THE ACTUAL FUCK");
 				}
 			}
 			case "cheat" -> {
-				BotInstance.botInstance.bank.credit(
-						event.getOption("receiver").getAsUser().getIdLong(),
-						Currency.getCurrency(event.getOption("currency").getAsString()),
-						(int) event.getOption("amount").getAsLong());
-				event.reply("Cheated " + event.getOption("amount").getAsLong() + " " +
-						Currency.getCurrency(event.getOption("currency").getAsString()).emote + " to " + event.getOption("receiver").getAsUser().getAsTag() + ".").queue(
-						interactionHook -> interactionHook.retrieveOriginal().queue(
-								interactionHook2 -> interactionHook.editOriginal(interactionHook2.getContentRaw()
-										.replace(event.getOption("receiver").getAsUser().getAsTag(), event.getOption("receiver").getAsUser().getAsMention())
-								).queue()
-						));
+				for(long id: BotInstance.modids) {
+					if(event.getMember().getIdLong() == id) {
+						IMentionable mention = event.getOption("receiver").getAsMentionable();
+						if(mention instanceof Role) {
+							List<Member> targets = event.getGuild().getMembersWithRoles((Role) mention);
+							for(Member m: targets) {
+								if((int) event.getOption("amount").getAsLong() > 0)
+									BotInstance.botInstance.bank.credit(
+											m.getIdLong(),
+											Currency.getCurrency(event.getOption("currency").getAsString()),
+											(int) event.getOption("amount").getAsLong());
+								else
+									BotInstance.botInstance.bank.withdraw(
+											m.getIdLong(),
+											Currency.getCurrency(event.getOption("currency").getAsString()),
+											(int) event.getOption("amount").getAsLong(),
+											true);
+							}
+							event.reply("Cheated " + event.getOption("amount").getAsLong() + " " +
+									Currency.getCurrency(event.getOption("currency").getAsString()).emote + " to " + ((Role) mention).getName() + ".").queue();
+						} else if(mention instanceof Member) {
+							if((int) event.getOption("amount").getAsLong() > 0)
+								BotInstance.botInstance.bank.credit(
+										mention.getIdLong(),
+										Currency.getCurrency(event.getOption("currency").getAsString()),
+										(int) event.getOption("amount").getAsLong());
+							else
+								BotInstance.botInstance.bank.withdraw(
+										mention.getIdLong(),
+										Currency.getCurrency(event.getOption("currency").getAsString()),
+										(int) event.getOption("amount").getAsLong(),
+										true);
+							event.reply("Cheated " + event.getOption("amount").getAsLong() + " " +
+									Currency.getCurrency(event.getOption("currency").getAsString()).emote + " to " + ((Member) mention).getEffectiveName() + ".").queue(
+									interactionHook -> interactionHook.retrieveOriginal().queue(
+											interactionHook2 -> interactionHook.editOriginal(interactionHook2.getContentRaw()
+													.replace(event.getOption("receiver").getAsUser().getAsTag(), mention.getAsMention())
+											).queue()
+									));
+						} else event.reply("Neither a Role nor a Member (Bug?)").queue();
+					}
+				}
 			}
 			case "booth" -> {
 				if(event.getChannel().getIdLong() == 849428863779733564L)
@@ -244,7 +295,7 @@ class Handler extends ListenerAdapter {
 								if(product.open || om == null) {
 									eb.addField("__" + product.name + "__", "**ID:** `" + product.productid + "`" +
 													(product.stock == -1 ? "\n**Infinite** stock." : "\n**" + product.stock + "** in stock.") +
-													"\nSold for **" + MessageComponents.computePrice("free", product.crowns, product.stars) +
+													"\nSold for **" + MessageComponents.displayPrice("free", product.crowns, product.stars) +
 													(product.auto ? "**\nSold **automatically \uD83D\uDD01**." : "**\nSold **manually \u270B**."),
 											true);
 								}
@@ -472,8 +523,8 @@ class Handler extends ListenerAdapter {
 										(amount > 1 ? amount + "x " + product.name : product.name),
 										"ID: `" + productid +
 										"`\nCurrent stock is **" + (product.stock == -1 ? "infinite \uD83D\uDD01" : product.stock + " \uD83D\uDCE6") +
-										"**\nCurrent price is **" + MessageComponents.computePrice("free", product.stars, product.crowns) +
-										(amount > 1 && (product.crowns > 0 || product.stars > 0) ? "**\nThus you receive **" + MessageComponents.computePrice("nothing", product.stars * amount, product.crowns * amount) : "") +
+										"**\nCurrent price is **" + MessageComponents.displayPrice("free", product.stars, product.crowns) +
+										(amount > 1 && (product.crowns > 0 || product.stars > 0) ? "**\nThus you receive **" + MessageComponents.displayPrice("nothing", product.stars * amount, product.crowns * amount) : "") +
 										"**.\n\nAs you set this product's trade manual, you have to \n`/accept " + requestid + "` or\n`/decline " + requestid + "`",
 										false)
 								.build()).queue();
@@ -486,35 +537,38 @@ class Handler extends ListenerAdapter {
 				OptionMapping om = event.getOption("id");
 				HashMap<Long, RequestController.RequestContainer> requests = botInstance.booths.requests.getRequestsByTrader(event.getUser().getIdLong());
 				if(requests.isEmpty())
-					event.reply("\u2755 You have no requests pending.").queue();
+					event.reply("❕ You have no requests pending.").queue();
 				else {
 					if(om == null && requests.size() > 1)
-						event.reply("\u2705 You have multiple requests pending, please provide a request id").queue();
+						event.reply("❕ You have multiple requests pending, please provide a request id").queue();
 					else {
 						RequestController.RequestContainer request = om == null ?
 								(RequestController.RequestContainer) requests.values().toArray()[0] : requests.get(om.getAsLong());//TODO pretty ugly
 						if(request == null)
-							event.reply("\u2705 The id you provided is invalid.").queue();
+							event.reply("❕ The id you provided is invalid.").queue();
 						else {
 							ProductController.ProductContainer product = botInstance.booths.products.getProduct(request.productid);
-							if(product == null)
-								event.reply("The Product does not exist anymore.").queue();
+							if(product == null) {
+								event.reply("The Product does not exist anymore. The request will be dropped.").queue();
+								botInstance.bank.credit(request.customerid, request.crowns, request.stars);
+								botInstance.booths.requests.dropRequest(request.requestid);
+							}
 							else if(botInstance.booths.products.removeStock(request.productid, request.amount)) {
 								botInstance.bank.credit(botInstance.booths.products.getOwner(request.productid),request.crowns, request.stars);
 								if(!botInstance.booths.requests.dropRequest(request.requestid))
 									System.out.println("Could not drop Request #" + request.requestid + ". THIS SHOULD NEVER HAPPEN!");
-								event.reply("\u2705 You accepted the trade.").queue();
+								event.reply("✅ You accepted the trade.").queue();
 								PrivateChannel pc = botInstance.jda.getUserById(request.customerid).openPrivateChannel().complete();
 								pc.sendMessage(
 										new EmbedBuilder()
-										.setTitle("\u2705 " + botInstance.jda.getUserById(product.ownerid).getAsTag() + " accepted your trade offer.")
+										.setTitle("✅ " + botInstance.jda.getUserById(product.ownerid).getAsTag() + " accepted your trade offer.")
 										.setDescription(
 												request.amount + "x __" + product.name + "__ for **" +
-												MessageComponents.computePrice("free", request.crowns, request.stars) + "**"
+												MessageComponents.displayPrice("free", request.crowns, request.stars) + "**"
 										).build()
 								).queue();
 							} else
-								event.reply("\u2705 You do not have enough stock left. Use `/product restock " + request.productid + "` to restock.").queue();
+								event.reply("❕  You do not have enough stock left. Use `/product restock " + request.productid + "` to restock.").queue();
 						}
 					}
 				}
@@ -523,7 +577,7 @@ class Handler extends ListenerAdapter {
 				OptionMapping om = event.getOption("id");
 				HashMap<Long, RequestController.RequestContainer> requests = botInstance.booths.requests.getRequestsByTrader(event.getUser().getIdLong());
 				if(requests.isEmpty())
-					event.reply("\u2755 You have no requests pending.").queue();
+					event.reply("❕ You have no requests pending.").queue();
 				else {
 					if(om == null && requests.size() > 1)
 						event.reply("\u2705 You have multiple requests pending, please provide a request id").queue();
@@ -545,7 +599,7 @@ class Handler extends ListenerAdapter {
 												.setTitle("\u274E " + botInstance.jda.getUserById(product.ownerid).getAsTag() + " declined your trade offer.")
 												.setDescription(
 														request.amount + "x __" + product.name + "__ for **" +
-																MessageComponents.computePrice("free", request.crowns, request.stars) + "**"
+																MessageComponents.displayPrice("free", request.crowns, request.stars) + "**"
 												).build()
 								).queue();
 							} else {
@@ -558,7 +612,7 @@ class Handler extends ListenerAdapter {
 												.setTitle("\u274E " + botInstance.jda.getUserById(product.ownerid).getAsTag() + " declined your trade offer.")
 												.setDescription(
 														request.amount + "x __" + product.name + "__ for **" +
-																MessageComponents.computePrice("free", request.crowns, request.stars) + "**"
+																MessageComponents.displayPrice("free", request.crowns, request.stars) + "**"
 												).build()
 								).queue();
 								event.reply("\u274E The offer was declined.").queue();
@@ -571,33 +625,33 @@ class Handler extends ListenerAdapter {
 				OptionMapping om = event.getOption("id");
 				HashMap<Long, RequestController.RequestContainer> requests = botInstance.booths.requests.getRequestsByTrader(event.getUser().getIdLong());
 				if(requests.isEmpty())
-					event.reply("\u2755 You have no requests pending.").queue();
+					event.reply("❕ You have no requests pending.").queue();
 				else {
 					if(om == null && requests.size() > 1)
-						event.reply("\u2705 You have multiple requests pending, please provide a request id").queue();
+						event.reply("❕ You have multiple requests pending, please provide a request id").queue();
 					else {
 						RequestController.RequestContainer request = om == null ?
 								(RequestController.RequestContainer) requests.values().toArray()[0] : requests.get(om.getAsLong());//TODO pretty ugly
 						if(request == null)
-							event.reply("\u2705 The id you provided is invalid.").queue();
+							event.reply("❕ The id you provided is invalid.").queue();
 						else {
 							ProductController.ProductContainer product = botInstance.booths.products.getProduct(request.productid);
 							if(botInstance.booths.requests.dropRequest(request.requestid)) {
 								botInstance.bank.credit(request.customerid, request.crowns, request.stars);
 								PrivateChannel pc = botInstance.jda.getUserById(botInstance.booths.products.getOwner(request.productid)).openPrivateChannel().complete();
 								if(product == null)
-									pc.sendMessage("\u274E " + event.getUser().getAsTag() + " cancelled his trade offer.").queue();
+									pc.sendMessage("ℹ " + event.getUser().getAsTag() + " cancelled his trade offer.").queue();
 								else
 									pc.sendMessage(
 										new EmbedBuilder()
-												.setTitle("\u274E " + event.getUser().getAsTag() + " cancelled his trade offer.")
+												.setTitle("ℹ " + event.getUser().getAsTag() + " cancelled his trade offer.")
 												.setDescription(request.amount + "x __" + product.name + "__ for **" +
-																MessageComponents.computePrice("free", request.crowns, request.stars) + "**"
+																MessageComponents.displayPrice("free", request.crowns, request.stars) + "**"
 												).build()
 									).queue();
-								event.reply("\u274E You cancelled your offer.").queue();
+								event.reply("✔ You cancelled your offer.").queue();
 							} else
-								event.reply("\u2705 I could not drop the request.").queue();
+								event.reply("❌ I could not drop the request.").queue();
 						}
 					}
 				}
@@ -616,6 +670,7 @@ class Handler extends ListenerAdapter {
 							.setImage("https://cdn.discordapp.com/attachments/555819034877231117/847202452608647228/logo.png")
 							.build()).queue();
 			for(Tribe t : Tribe.newTurnSubs) t.announceNewTurn(instance.jda, turn);
+			botInstance.bank.eraseStars();
 			botInstance.tt = null;
 		}));
 	}

@@ -1,5 +1,6 @@
 package core;
 
+import database.CompetitionManager;
 import finance.BalanceManager;
 import market.BoothController;
 import net.dv8tion.jda.api.JDA;
@@ -20,12 +21,14 @@ import java.sql.SQLException;
 
 public class BotInstance {
 	
+	public static final long[] modids = new long[] {729100801095630858L, 282551955975307264L, 543338103218372608L, 695946463405932594L, 484039398527074335L};
 	public static BotInstance botInstance;
 	public JDA jda;
 	public TimerQueue tt;
 	ConsoleInteraction console;
 	BalanceManager bank;
 	BoothController booths;
+	CompetitionManager competitions;
 	
 	public static void main(String[] args) throws IOException, UnsupportedFlavorException {
 		if(Facts.readTokenFile()) {
@@ -80,6 +83,7 @@ public class BotInstance {
 		try {
 			bank = new BalanceManager();
 			booths = new BoothController();
+			competitions = new CompetitionManager();
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
 		}
