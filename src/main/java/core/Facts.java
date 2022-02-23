@@ -43,9 +43,9 @@ public class Facts {
 	
 	public static boolean readTokenFile() {
 		try {
-			DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("data/"), path -> path.toFile().isFile());
+			DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("tokens/"), path -> path.toFile().isFile());
 			for(Path path: stream) {
-				if(path.getFileName().toString().equals("token")) {
+				if(path.getFileName().toString().equals("BotToken")) {
 					List<String> lines = Files.readAllLines(path);
 					firstLine = lines.get(0);
 					return true;

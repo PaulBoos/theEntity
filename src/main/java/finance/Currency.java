@@ -6,12 +6,12 @@ public enum Currency {
 	
 	static final Currency[] currencies = new Currency[]{STARS, CROWNS};
 	
-	public final String name, emote;
+	public final String name, emoji;
 	public final int id;
 	
 	Currency(String name, int id, String emote) {
 		this.name = name;
-		this.emote = emote;
+		this.emoji = emote;
 		this.id = id;
 	}
 	

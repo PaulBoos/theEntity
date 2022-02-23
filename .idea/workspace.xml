@@ -9,21 +9,66 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="&#10;&#10;ConsoleInteraction.java &gt;&#10;    Updated Console - every Command returns a Message now.&#10;    added surrogate command">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/theEntity_jar.xml" afterDir="false" />
+    <list default="true" id="a3713135-f818-4b4c-9cf2-4968aaf97a62" name="Default Changelist" comment="A lot of shit happened.&#10;&#10;TODOS:&#10;🔄 Legislation AST partially done;&#10;🔄 World Objects are yet a container;&#10;🔄 Admin commands are to be expanded, but are implemented;&#10;✔ Google Drive/Office was imported and implemented;&#10;✔ Market, Console, SlashCommands, etc. still work like a charm;&#10;❌ Competition project is frozen;">
+      <change afterPath="$PROJECT_DIR$/src/main/java/core/WorldObject/City.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/core/WorldObject/Fortress.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/Database.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/GoogleDocuments.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/GoogleDrive.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/GoogleSheets.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/Action.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/Bill.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/LegisMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/Trigger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/conditions/ASTNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/conditions/AccessorNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/conditions/OperatorNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/conditions/PrefixOperatorNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/conditions/VariableNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/exceptions/ASTEvalException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/exceptions/AccessorExceptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/exceptions/ExceptionType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/exceptions/OperatorExceptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/exceptions/PrefixOperatorExceptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/exceptions/TextParseExceptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/parser/CharReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/parser/InternalCharReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/parser/Parser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/parser/StringCharReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/parser/Token.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/parser/TokenDefinition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/parser/TokenType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/BillResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/BoolResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/CityResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/FortressResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/GroupResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/LocationResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/NobleResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/NumericResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/Result.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/ResultType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/TextResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/googledocs/legis/results/TribeResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/online/Bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c22501d9-0cda-4c3f-b39c-133a9ed64dcd.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/BotInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/ConsoleInteraction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/core/Facts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Facts.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Handler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/SlashCommands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/core/Tribe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/core/Tribe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/CompetitionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/CompetitionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/finance/BalanceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/finance/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/finance/Currency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/market/BoothController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/market/BoothController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/market/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/market/ProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utils/MessageComponents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/MessageComponents.java" afterDir="false" />
     </list>
+    <list id="0e7e1e9d-876c-44a5-b2b8-d316ca6fb6b5" name="Changes by jojo" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,6 +77,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -66,42 +113,65 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="RunConfigurationTargetLRU" value="1ae4bbc3-6bd2-4390-93c5-33c9f3ae0e89" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last.edited.regexp" value="" />
-    <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/The Almighty One" />
+    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="last.edited.regexp" value="test(test)test((test)test)" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/googledocs" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.113895215" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="googledocs.legis.conditions" />
+      <recent name="googledocs.legis.results" />
       <recent name="core" />
       <recent name="database" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\LordBecher\Documents\GitHub\theEntity\src\main\java\googledocs" />
+      <recent name="C:\Users\LordBecher\Documents\GitHub\theEntity" />
       <recent name="C:\Users\LordBecher\Documents\GitHub\theEntity\data" />
       <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity\data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LordBecher\Documents\GitHub\theEntity\tokens" />
+      <recent name="C:\Users\LordBecher\Documents\GitHub\theEntity\src\main\resources" />
+      <recent name="C:\Users\LordBecher\Documents\GitHub\theEntity\src\main\java\googledocs" />
+      <recent name="C:\Users\LordBecher\Documents\GitHub\theEntity\data" />
       <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity\data" />
-      <recent name="C:\Users\LordBechör\Documents\GitHub\theEntity" />
     </key>
     <key name="MoveInnerDialog.RECENTS_KEY">
       <recent name="core" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GoogleDrive">
+    <configuration name="Bill" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="googledocs.legis.Bill" />
+      <module name="theEntity" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="googledocs.legis.results.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BotInstance" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="core.BotInstance" />
       <module name="theEntity" />
@@ -109,8 +179,43 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GoogleDrive" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="googledocs.GoogleDrive" />
+      <module name="theEntity" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="googledocs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Parser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="googledocs.legis.parser.Parser" />
+      <module name="theEntity" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="googledocs.legis.parser.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.BotInstance" />
+      <item itemvalue="Application.Bill" />
+      <item itemvalue="Application.Parser" />
+      <item itemvalue="Application.GoogleDrive" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GoogleDrive" />
+        <item itemvalue="Application.Parser" />
+        <item itemvalue="Application.Bill" />
         <item itemvalue="Application.BotInstance" />
       </list>
     </recent_temporary>
@@ -147,7 +252,11 @@
       <workItem from="1626461761438" duration="43000" />
       <workItem from="1627211324997" duration="16759000" />
       <workItem from="1627242334174" duration="6971000" />
-      <workItem from="1627405380321" duration="2831000" />
+      <workItem from="1627405380321" duration="3974000" />
+      <workItem from="1627495890145" duration="1004000" />
+      <workItem from="1632171740646" duration="1483000" />
+      <workItem from="1632176895709" duration="28000" />
+      <workItem from="1632430941328" duration="17000" />
     </task>
     <task id="LOCAL-00001" summary="Adding maven's /target/ and intellij's /.idea/">
       <created>1624797437245</created>
@@ -310,7 +419,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625387877436</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="&#10;&#10;ConsoleInteraction.java &gt;&#10;    Updated Console - every Command returns a Message now.&#10;    added surrogate command">
+      <created>1627408675719</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1627408675719</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,7 +449,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Adding maven's /target/ and intellij's /.idea/" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Maven compiled classes removed&#10;SQLite Dialect added to IJ IDEA, Library moved to top." />
     <MESSAGE value="test Database moved to top&#10;Guild Database Accessor now outsourced from General Purpose Accessor" />
     <MESSAGE value="GuildDatabase now uses correct url" />
@@ -357,23 +473,9 @@
     <MESSAGE value="Trading Feature rollout" />
     <MESSAGE value="minor changes" />
     <MESSAGE value="random changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="random changes" />
+    <MESSAGE value="&#10;&#10;ConsoleInteraction.java &gt;&#10;    Updated Console - every Command returns a Message now.&#10;    added surrogate command" />
+    <MESSAGE value="A lot of shit happened.&#10;&#10;TODOS:&#10; Legislation AST partially done;&#10; World Objects are yet a container;&#10; Admin commands are to be expanded, but are implemented;&#10;✔ Google Drive/Office was imported and implemented;&#10;✔ Market, Console, SlashCommands, etc. still work like a charm;&#10;❌ Competition project is frozen;" />
+    <option name="LAST_COMMIT_MESSAGE" value="A lot of shit happened.&#10;&#10;TODOS:&#10; Legislation AST partially done;&#10; World Objects are yet a container;&#10; Admin commands are to be expanded, but are implemented;&#10;✔ Google Drive/Office was imported and implemented;&#10;✔ Market, Console, SlashCommands, etc. still work like a charm;&#10;❌ Competition project is frozen;" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/market/ProductController.java</url>
-          <line>91</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/market/ProductController.java</url>
-          <line>96</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

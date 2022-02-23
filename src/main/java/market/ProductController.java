@@ -22,12 +22,13 @@ public class ProductController {
 		PreparedStatement pstmt = booths.conn.prepareStatement(
 				"CREATE TABLE IF NOT EXISTS Product " +
 						"(productid INTEGER primary key, " +
+						"itemid INTEGER," +
 						"ownerID INTEGER, " +
 						"name TEXT, " +
 						"crowns INTEGER, " +
 						"stars INTEGER, " +
-						"stock INTEGER, " +
-						"auto INTEGER, " +
+						"stock INTEGER DEFAULT 0, " +
+						"auto INTEGER DEFAULT 0, " +
 						"open INTEGER DEFAULT 0)");
 		pstmt.execute();
 		pstmt.close();
@@ -42,7 +43,7 @@ public class ProductController {
 						"crowns INTEGER, " +
 						"stars INTEGER, " +
 						"stock INTEGER DEFAULT 0, " +
-						"auto INTEGER, " +
+						"auto INTEGER DEFAULT 0, " +
 						"open INTEGER DEFAULT 0)");
 		pstmt.execute();
 		pstmt.close();
@@ -79,7 +80,7 @@ public class ProductController {
 			PreparedStatement pstmt = booths.conn.prepareStatement(
 					"INSERT INTO ForeignProduct (productid, itemid, ownerID, crowns, stars, auto) " +
 							"VALUES (?,?,?,?,?,?)");
-			long pid = generateProductId(productidbitlength);
+			long pid = generateForeignId(productidbitlength);
 			if(pid == 0) return 0;
 			pstmt.setLong(1,pid);
 			pstmt.setLong(2,itemid);
@@ -249,11 +250,12 @@ public class ProductController {
 			PreparedStatement pstmt = booths.conn.prepareStatement(
 					"SELECT ownerID FROM Product WHERE productid = ?");
 			pstmt.setLong(1, productid);
-			long out = pstmt.executeQuery().getLong("ownerID");
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.isClosed()) return 0;
+			long out = rs.getLong("ownerID");
 			pstmt.close();
 			return out;
 		} catch(SQLException throwables) {
-			if(throwables.getMessage().equals("ResultSet closed")) return 0;
 			throwables.printStackTrace();
 			return 0;
 		}
@@ -427,7 +429,7 @@ public class ProductController {
 						rs.getLong("productid"),
 						rs.getLong("itemid"),
 						rs.getLong("ownerid"),
-						rs.getString("name"),
+						"FOREIGN",
 						rs.getInt("crowns"),
 						rs.getInt("stars"),
 						rs.getInt("stock"),

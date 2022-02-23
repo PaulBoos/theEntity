@@ -2,6 +2,7 @@ package core;
 
 import finance.BalanceManager;
 import finance.Currency;
+import market.BoothController;
 import market.ProductController;
 import market.RequestController;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -119,6 +120,48 @@ class Handler extends ListenerAdapter {
 					announceNewTurn(Instant.now(), (int) event.getOption("turn").getAsLong());
 				event.deferReply(false).queue();
 			}
+			case "admin" -> {
+				switch(event.getSubcommandGroup()) {
+					case "finance" -> {
+						switch(event.getSubcommandName()) {
+							case "userinfo" -> {
+								Member target = event.getOption("target").getAsMember();
+								event.reply(target.getAsMention() + " has " +
+												BotInstance.botInstance.bank.getBalance(target.getIdLong(), Currency.STARS)
+										+ " " + Currency.STARS.emoji + " and " +
+												BotInstance.botInstance.bank.getBalance(target.getIdLong(), Currency.CROWNS)
+										+ " " + Currency.CROWNS.emoji).queue();
+							}
+							case "setbalance" -> {
+								OptionMapping target = event.getOption("target");
+								OptionMapping omstars = event.getOption("stars");
+								OptionMapping omcrowns = event.getOption("crowns");
+								if(omstars != null) {
+									BotInstance.botInstance.bank.setBalance(target.getAsUser().getIdLong(), Currency.STARS, (int) omstars.getAsLong());
+								}
+								if(omcrowns != null) {
+									BotInstance.botInstance.bank.setBalance(target.getAsUser().getIdLong(), Currency.CROWNS, (int) omcrowns.getAsLong());
+								}
+								if(omcrowns == null && omstars == null)
+									event.reply("Please provide at least *one* update.").queue();
+								else
+									event.reply(target.getAsMember().getAsMention() + "'s new balance is: " +
+											BotInstance.botInstance.bank.getBalance(target.getAsMember().getIdLong(), Currency.STARS)
+											+ " " + Currency.STARS.emoji + " and " +
+											BotInstance.botInstance.bank.getBalance(target.getAsMember().getIdLong(), Currency.CROWNS)
+											+ " " + Currency.CROWNS.emoji).queue();
+							}
+						}
+					}
+					case "booth" -> {
+						switch(event.getSubcommandName()) {
+							case "list" -> {
+								// ADMIN LIST ALL BOOTHS TODO
+							}
+						}
+					}
+				}
+			}
 			
 			case "howlong" -> {
 				try {
@@ -145,17 +188,17 @@ class Handler extends ListenerAdapter {
 							event.reply(
 									"Your balance is: " +
 											BotInstance.botInstance.bank.getBalance(event.getUser().getIdLong(), Currency.CROWNS)
-											+ " " + Currency.CROWNS.emote
+											+ " " + Currency.CROWNS.emoji
 											+ " + " +
 											BotInstance.botInstance.bank.getBalance(event.getUser().getIdLong(),Currency.STARS)
-											+ " " + Currency.STARS.emote
+											+ " " + Currency.STARS.emoji
 							).queue();
 						} else {
 							Currency currency = Currency.getCurrency(om.getAsString());
 							event.reply(
 									"Your balance is: " +
 											BotInstance.botInstance.bank.getBalance(event.getUser().getIdLong(), currency)
-											+ " " + currency.emote
+											+ " " + currency.emoji
 							).queue();
 						}
 					}
@@ -180,7 +223,7 @@ class Handler extends ListenerAdapter {
 									(int) event.getOption("amount").getAsLong()
 							);
 							event.reply("Transferring " + event.getOption("amount").getAsLong() + " " +
-									Currency.getCurrency(event.getOption("currency").getAsString()).emote + " to " + event.getOption("receiver").getAsUser().getAsTag() + ".").queue(
+									Currency.getCurrency(event.getOption("currency").getAsString()).emoji + " to " + event.getOption("receiver").getAsUser().getAsTag() + ".").queue(
 									interactionHook -> interactionHook.retrieveOriginal().queue(
 											interactionHook2 -> interactionHook.editOriginal(interactionHook2.getContentRaw()
 													.replace(event.getOption("receiver").getAsUser().getAsTag(), event.getOption("receiver").getAsUser().getAsMention())
@@ -197,7 +240,7 @@ class Handler extends ListenerAdapter {
 									case CROWNS -> {
 										if(botInstance.bank.withdraw(event.getMember().getIdLong(), Currency.STARS, (int) event.getOption("amount").getAsLong(), false)) {
 											botInstance.bank.credit(event.getMember().getIdLong(), Currency.CROWNS, (int) (event.getOption("amount").getAsLong() * 10));
-											event.reply("\uD83D\uDCB1 Success! You exchanged " + (int) event.getOption("amount").getAsLong() + " " + Currency.STARS.emote + " for " + (int) (event.getOption("amount").getAsLong() * 10) + " " + Currency.CROWNS.emote).queue();
+											event.reply("\uD83D\uDCB1 Success! You exchanged " + (int) event.getOption("amount").getAsLong() + " " + Currency.STARS.emoji + " for " + (int) (event.getOption("amount").getAsLong() * 10) + " " + Currency.CROWNS.emoji).queue();
 										} else event.reply("❌ You do not have enough stars.").queue();
 									}
 									default -> event.reply("❌ You cannot exchange stars for " + event.getOption("currencyto").getAsString() + "s").queue();
@@ -230,7 +273,7 @@ class Handler extends ListenerAdapter {
 											true);
 							}
 							event.reply("Cheated " + event.getOption("amount").getAsLong() + " " +
-									Currency.getCurrency(event.getOption("currency").getAsString()).emote + " to " + ((Role) mention).getName() + ".").queue();
+									Currency.getCurrency(event.getOption("currency").getAsString()).emoji + " to " + ((Role) mention).getName() + ".").queue();
 						} else if(mention instanceof Member) {
 							if((int) event.getOption("amount").getAsLong() > 0)
 								BotInstance.botInstance.bank.credit(
@@ -244,7 +287,7 @@ class Handler extends ListenerAdapter {
 										(int) event.getOption("amount").getAsLong(),
 										true);
 							event.reply("Cheated " + event.getOption("amount").getAsLong() + " " +
-									Currency.getCurrency(event.getOption("currency").getAsString()).emote + " to " + ((Member) mention).getEffectiveName() + ".").queue(
+									Currency.getCurrency(event.getOption("currency").getAsString()).emoji + " to " + ((Member) mention).getEffectiveName() + ".").queue(
 									interactionHook -> interactionHook.retrieveOriginal().queue(
 											interactionHook2 -> interactionHook.editOriginal(interactionHook2.getContentRaw()
 													.replace(event.getOption("receiver").getAsUser().getAsTag(), mention.getAsMention())
@@ -276,6 +319,18 @@ class Handler extends ListenerAdapter {
 					case "rename" -> {
 						botInstance.booths.changeName(event.getUser().getIdLong(), event.getOption("name").getAsString());
 						event.reply("Your booth's name is now \"" + event.getOption("name").getAsString() + "\"").queue();
+					}
+					case "list" -> {
+						List<BoothController.BoothPrint> booths = botInstance.booths.getAllBooths(true);
+						EmbedBuilder builder = new EmbedBuilder().setTitle("All open Booths:");
+						if(booths == null)
+							event.reply("No open booths returned. This is probably a bug.").queue();
+						else {
+							for(BoothController.BoothPrint print: booths) {
+								builder.addField(print.name, "Owner: " + botInstance.jda.getUserById(print.memberid).getAsMention(), true);
+							}
+							event.deferReply().complete().editOriginalEmbeds(builder.build()).queue();
+						}
 					}
 					default -> event.reply("howw").queue();
 				}
@@ -322,11 +377,11 @@ class Handler extends ListenerAdapter {
 															(crowns == 0 && stars == 0) ?
 																	"free" :
 																	(crowns == 0) ?
-																			stars + " " + Currency.STARS.emote :
+																			stars + " " + Currency.STARS.emoji :
 																			(stars == 0) ?
-																					crowns + " " + Currency.CROWNS.emote :
-																					crowns + " " + Currency.CROWNS.emote +
-																							" + " + stars + " " + Currency.STARS.emote) +
+																					crowns + " " + Currency.CROWNS.emoji :
+																					crowns + " " + Currency.CROWNS.emoji +
+																							" + " + stars + " " + Currency.STARS.emoji) +
 															(autotrade ? " automatically \uD83D\uDD01**." : " manually \u270B**.") +
 															"\nYou can allow purchase with `/product open " + id + "`",
 													false
@@ -354,11 +409,11 @@ class Handler extends ListenerAdapter {
 																(crowns == 0 && stars == 0) ?
 																		"free" :
 																		(crowns == 0) ?
-																				stars + " " + Currency.STARS.emote :
+																				stars + " " + Currency.STARS.emoji :
 																				(stars == 0) ?
-																						crowns + " " + Currency.CROWNS.emote :
-																						crowns + " " + Currency.CROWNS.emote +
-																								" + " + stars + " " + Currency.STARS.emote) +
+																						crowns + " " + Currency.CROWNS.emoji :
+																						crowns + " " + Currency.CROWNS.emoji +
+																								" + " + stars + " " + Currency.STARS.emoji) +
 																(autotrade ? " automatically \uD83D\uDD01**." : " manually \u270B**.") +
 																"\nYou can allow purchase with `/product open " + id + "`",
 														false
@@ -406,9 +461,9 @@ class Handler extends ListenerAdapter {
 							event.reply("\u2755 You are not the owner of " + productname).queue();
 						else if(botInstance.booths.products.reprice(productid, crowns, stars))
 							event.reply("\uD83E\uDE99 Repriced " + productname + " to " + ((crowns == 0 && stars == 0) ?
-									"free." : (crowns == 0) ? stars + " " + Currency.STARS.emote + "." : (stars == 0) ?
-									crowns + " " + Currency.CROWNS.emote + "." :
-									crowns + " " + Currency.CROWNS.emote + " + " + stars + " " + Currency.STARS.emote + ".")).queue();
+									"free." : (crowns == 0) ? stars + " " + Currency.STARS.emoji + "." : (stars == 0) ?
+									crowns + " " + Currency.CROWNS.emoji + "." :
+									crowns + " " + Currency.CROWNS.emoji + " + " + stars + " " + Currency.STARS.emoji + ".")).queue();
 						else event.reply("\u2754 Product not found.").queue();
 					}
 					case "autotrade" -> {

@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 
 public class SlashCommands {
 	
@@ -51,7 +52,8 @@ public class SlashCommands {
 							new SubcommandData("open", "Open your booth."),
 							new SubcommandData("close", "Close your booth."),
 							new SubcommandData("rename", "Rename your booth.")
-									.addOption(OptionType.STRING, "name", "The new name of your booth.", true)),
+									.addOption(OptionType.STRING, "name", "The new name of your booth.", true),
+							new SubcommandData("list", "List all open booths.")),
 			PRODUCT = new CommandData("product", "Edit a product")
 					.addSubcommands(
 							new SubcommandData("list", "List Products")
@@ -118,6 +120,7 @@ public class SlashCommands {
 	static void updateGuildCommands(JDA jda) {
 		jda.getGuildById(826170347207655434L).updateCommands().addCommands(
 				//TRIBEVERSE COMMANDS
+				BOOTH,
 				new CommandData("cheat", "Cheat some money")
 						.addOptions(
 								new OptionData(OptionType.INTEGER, "amount", "amount of credit you want to cheat", true),
@@ -130,6 +133,7 @@ public class SlashCommands {
 		
 		jda.getGuildById(555819034877231115L).updateCommands().addCommands(
 				//WYABRO COMMANDS
+				BOOTH,
 				new CommandData("tribe", "Update a tribe")
 						.addSubcommands(
 								new SubcommandData("vengir", "Update Vengir")
@@ -163,7 +167,19 @@ public class SlashCommands {
 						.addOption(OptionType.INTEGER, "turn", "Put the turn number here, as I don't memorize that currently."),
 				new CommandData("testtimer", "Create a timer")
 						.addOption(OptionType.INTEGER, "minutes", "how long to wait in minutes", true)
-						.addOption(OptionType.INTEGER, "seconds", "how long to wait in seconds", true)
+						.addOption(OptionType.INTEGER, "seconds", "how long to wait in seconds", true),
+				new CommandData("admin", "Administrate Tribeverse")
+						.addSubcommandGroups(
+								new SubcommandGroupData("finance", "Financial Administration")
+										.addSubcommands(
+												new SubcommandData("userinfo", "Get information on a user's finances.")
+														.addOption(OptionType.USER, "target", "The user you want information about.", true),
+												new SubcommandData("setbalance", "Set a user's Balance")
+														.addOption(OptionType.USER, "target", "The user you want information about.", true)
+														.addOption(OptionType.INTEGER, "stars", "Amount of stars to set.")
+														.addOption(OptionType.INTEGER, "crowns", "Amount of crowns to set.")
+										)
+						)
 		).queue();
 	}
 	

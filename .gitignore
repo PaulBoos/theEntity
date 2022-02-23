@@ -1,6 +1,6 @@
 target/
 .idea/
-data/token
+tokens/BotToken
 data/guilds/
 /data/competitions.db
 /data/finance.db

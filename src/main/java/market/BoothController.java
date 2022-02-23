@@ -2,11 +2,13 @@ package market;
 
 import core.BotInstance;
 import database.Accessor;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BoothController extends Accessor {
@@ -32,8 +34,51 @@ public class BoothController extends Accessor {
 		pstmt.close();
 	}
 	
+	
+	public List<BoothPrint> getAllBooths() {
+		try {
+			connect();
+			PreparedStatement pstmt = conn.prepareStatement(
+					"SELECT * FROM Booth"
+			);
+			return getAllBoothsByStatement(pstmt);
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+			return null;
+		}
+	}
+	public List<BoothPrint> getAllBooths(boolean requiredOpenState) {
+		try {
+			connect();
+			PreparedStatement pstmt = conn.prepareStatement(
+					"SELECT * FROM Booth WHERE open = ?"
+			);
+			pstmt.setString(1, String.valueOf(requiredOpenState));
+			return getAllBoothsByStatement(pstmt);
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
+			return null;
+		}
+	}
+	@Nullable
+	private List<BoothPrint> getAllBoothsByStatement(PreparedStatement pstmt) throws SQLException {
+		ResultSet rs = pstmt.executeQuery();
+		List<BoothPrint> output = new ArrayList<>();
+		while(rs.next()) {
+			output.add(new BoothPrint(
+					rs.getLong("memberid"),
+					rs.getString("name"),
+					rs.getBoolean("open")
+			));
+		}
+//		return output.size() > 0 ? output : null;
+		return output;
+	}
+	
+	
 	public String getName(long memberid) {
 		try {
+			connect();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"SELECT name FROM Booth WHERE memberid = ?"
 			);
@@ -47,6 +92,7 @@ public class BoothController extends Accessor {
 	
 	public boolean isOpen(long memberid) {
 		try {
+			connect();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"SELECT open FROM Booth WHERE memberid = ?"
 			);
@@ -65,6 +111,7 @@ public class BoothController extends Accessor {
 	
 	public void changeName(long memberid, String name) {
 		try {
+			connect();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"INSERT INTO Booth (memberid, name, open) " +
 							"VALUES (?,?,'false')" +
@@ -82,6 +129,7 @@ public class BoothController extends Accessor {
 	
 	public void changeOpen(long memberid, boolean open) {
 		try {
+			connect();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"INSERT INTO Booth (memberid, name, open) " +
 							"VALUES (?,?,?)" +
@@ -116,4 +164,19 @@ public class BoothController extends Accessor {
 			return 0;
 		}
 	}
+	
+	public static class BoothPrint {
+		
+		public final long memberid;
+		public final String name;
+		public final boolean openState;
+		
+		public BoothPrint(long memberid, String name, boolean openState) {
+			this.memberid = memberid;
+			this.name = name;
+			this.openState = openState;
+		}
+		
+	}
+	
 }

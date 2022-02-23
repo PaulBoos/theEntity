@@ -5,7 +5,7 @@ import finance.Currency;
 public class MessageComponents {
 	
 	public static String displayPrice(String nullText, int crowns, int stars) {
-		return ((crowns == 0 && stars == 0) ? nullText : (crowns == 0) ? stars + " " + Currency.STARS.emote : (stars == 0) ? crowns + " " + Currency.CROWNS.emote : crowns + " " + Currency.CROWNS.emote + " + " + stars + " " + Currency.STARS.emote);
+		return ((crowns == 0 && stars == 0) ? nullText : (crowns == 0) ? stars + " " + Currency.STARS.emoji : (stars == 0) ? crowns + " " + Currency.CROWNS.emoji : crowns + " " + Currency.CROWNS.emoji + " + " + stars + " " + Currency.STARS.emoji);
 	}
 	
 	public static String calculateSurrogate(String input) {

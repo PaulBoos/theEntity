@@ -1,13 +1,14 @@
 package core;
 
+import core.WorldObject.City;
 import finance.Currency;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public enum Tribe {
 	
@@ -24,10 +25,10 @@ public enum Tribe {
 		for(int surplus = stars % starDistribution.length; surplus > 0; surplus--) starDistribution[(int) (Math.random() * starDistribution.length)-1]++;
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < starDistribution.length; i++) {
-			sb.append(members.get(i).getEffectiveName()).append(" gets ").append(starDistribution[i]).append(" <:resource:831308477325508688>\n");
+			sb.append("> " + members.get(i).getEffectiveName()).append(" gets ").append(starDistribution[i]).append(" <:resource:831308477325508688>\n");
 			BotInstance.botInstance.bank.credit(members.get(i).getIdLong(), Currency.STARS, starDistribution[i]);
 		}
-		BotInstance.botInstance.jda.getTextChannelById(829449469044457502L).sendMessage("Stars this turn: " + stars + " <:resource:831308477325508688>\nResource distribution:\n" + sb + "Technology costs: " + event.getOption("tech").getAsString()).queue();
+		BotInstance.botInstance.jda.getTextChannelById(829449469044457502L).sendMessage("Stars this turn: " + stars + " <:resource:831308477325508688>\nResource distribution:\n\n" + sb + "Technology costs: " + event.getOption("tech").getAsString()).queue();
 		return "Done!";
 	}),
 	IMPERIUS ("Imperius", "imp",  true,  829449164046729336L, 838865509658656839L, 826171182544977922L, event -> {
@@ -92,6 +93,21 @@ public enum Tribe {
 		return "Becher messed up, i did not find a tribe.";
 	}
 	
+	@NotNull
+	public Set<City> getCities() {
+		return new HashSet<>(); // TODO
+	}
+	
+	@NotNull
+	public Set<City> getFortresses() {
+		return new HashSet<>(); // TODO
+	}
+	
+	@NotNull
+	public Set<Long> getNobles() {
+		return new HashSet<>(); // TODO
+	}
+	
 	void announceNewTurn(JDA jda, int turn) {
 		try {
 			jda.getTextChannelById(actionChannel).sendMessage("```Turn #" + turn + " begins```").queue();
@@ -106,6 +122,13 @@ public enum Tribe {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static @Nullable Tribe getTribeByName(String name) {
+		for(Tribe t: Tribe.values()) {
+			if(t.name.equalsIgnoreCase(name)) return t;
+		}
+		return null;
 	}
 	
 	private interface TurnHandler {
